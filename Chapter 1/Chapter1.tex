@@ -1,0 +1,112 @@
+\documentclass[bwprint, withoutpreface]{cumcmthesis}
+
+\usepackage{extarrows}
+
+\title{实变第一章总结}
+
+\begin{document}
+\maketitle
+\section{集合与集合的运算}
+\indent 集合的表示：列举法，描述法.
+
+子集，真子集.
+
+\textbf{幂集:} $\mathcal{P}(X) = \{A:A \subset X\}$, 若$|X|=n$，则$|\mathcal{P}(X)|=2^n$.
+
+集合的有限交，并，差，余.
+
+相对差集：$A \Delta B = (A - B) \cup (B - A)$，若$A \Delta B = \emptyset$，$A = B$.
+
+集族，集列：若对$\forall \alpha \in I$都对应一个集$A_{\alpha}$，则称$\{A_n\}_{\alpha \in I}$为集族.若$I = \mathbb{N}$，则称$\{A_n\}_{\alpha \in \mathbb{N}}$为集列.
+
+集合的可列交：
+\begin{equation*}
+	\bigcup_{\alpha \in I}{A_\alpha} = \{\exists \alpha \in I, s.t. \quad x \in A_{\alpha}\}
+\end{equation*}.
+
+集合的可列并：
+\begin{equation*}
+	\bigcap_{\alpha \in I}{A_\alpha} = \{\forall \alpha \in I, x \in A_{\alpha}\}
+\end{equation*}.
+
+可列交与可列并的性质：交换律，结合律，分配律.
+
+\textbf{De Morgan 公式：}
+\begin{align*}
+	{(\bigcup_{\alpha \in I}{A_{\alpha}})}^C = \bigcap_{\alpha \in I}{{A_{\alpha}}^C} \\ 
+	{(\bigcap_{\alpha \in I}{A_{\alpha}})}^C = \bigcup_{\alpha \in I}{{A_{\alpha}}^C}
+\end{align*}
+
+\textbf{集合的表示：}根据所给条件由内向外进行表示.一般等价转化为：$\forall: \bigcap$，$\exists: \bigcup$.通过对\textbf{指标依赖的分析}，依次将极限定义转化为集合符号的定义。
+
+直积：有序$n$元组全体构成的集：$\{ (x_1, x_2, \cdots, x_n): x_1 \in A_1, x_2 \in A_2, \cdots, x_n \in A_n \}$
+
+集列的极限：
+
+上极限：
+\begin{equation*}
+	\varlimsup_{n \to \infty} = \{x: x\mbox{属于}A_n\mbox{中的无限多个}\}
+\end{equation*}.
+
+下极限：
+\begin{equation*}
+	\varliminf_{n \to \infty} = \{x: x\mbox{至多不属于}A_n\mbox{中的有限多个}\}
+\end{equation*}.
+
+\begin{equation*}
+	\varlimsup_{n \to \infty} \subset \varliminf_{n \to \infty}
+\end{equation*}
+
+若
+\begin{equation*}
+	\varlimsup_{n \to \infty} = \varliminf_{n \to \infty}
+\end{equation*}
+
+则称$\{A_n\}$存在极限，记
+\begin{equation*}
+	A \xlongequal{def} \varlimsup_{n \to \infty} = \varliminf_{n \to \infty}
+\end{equation*}
+
+\textbf{集列极限的表示：上极限先变大再变小，下极限先变小再变大.}
+\begin{align*}
+	\varlimsup_{n \to \infty} = \bigcap_{n = 1}^{\infty}{\bigcup_{k = n}^{\infty}{A_k}} \\
+	\varliminf_{n \to \infty} = \bigcup_{n = 1}^{\infty}{\bigcap_{k = n}^{\infty}{A_k}}
+\end{align*}
+
+\textbf{单调集列必存在极限，且：}
+\begin{align*}
+	\lim{A_n} = \bigcup_{n = 1}^{\infty}{A_n} \quad A_n\mbox{单调递减} \\
+	\lim{A_n} = \bigcap_{n = 1}^{\infty}{A_n} \quad A_n\mbox{单调递增}
+\end{align*}
+
+\section{映射，可列集，基数}
+\indent 映射，值域，定义域，像，原像，函数，单射，满射，双射，逆映射，反函数，复合映射，延拓，限制.
+
+\textbf{特征函数(示性函数)：}
+
+$A \subset X$，
+\begin{equation*}
+	\chi_A(x) = 
+	\begin{cases}
+		1, \quad x \in A \\
+		0, \quad x \not \in A		
+	\end{cases}	
+\end{equation*}
+
+特征函数的性质.
+
+\textbf{特征函数能够表示分段函数，可以看作对函数的一种“粘连”：}
+\begin{equation*}
+	f(x) = \sum_{i = 1}^{n}{f_i(x)\chi_{A_i}(x)}
+\end{equation*}
+
+其中$\{A_n\}$为不相交的子集，并且$X$为它们的并集.$f_i(x)$为定义在$\{A_i\}$上的函数。
+
+\textbf{集合的对等关系：}$A$，$B$是两个非空集合，若$\exists \phi:A \to B, \phi\mbox{为双射}$，则$A$，$B$对等，记为$A \sim B$.且$\emptyset \sim \emptyset$.
+
+集合的对等关系满足自反性，对称性与传递性.
+
+\section{集类}
+\section{$\mathbb{R}^n$中的点集}
+
+\end{document}
