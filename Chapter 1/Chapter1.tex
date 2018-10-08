@@ -2,6 +2,7 @@
 
 \usepackage{extarrows}
 \usepackage{authblk}
+\usepackage{tikz}
 
 \title{实变第一章总结}
 
@@ -113,7 +114,7 @@ $A \subset X$，
 
 其中$\{A_n\}$为不相交的子集，并且$X$为它们的并集.$f_i(x)$为定义在$\{A_i\}$上的函数。
 
-\textbf{集合的对等关系：}$A$，$B$是两个非空集合，若$\exists \phi:A \to B, \phi\mbox{为双射}$，则$A$，$B$对等，记为$A \sim B$.且$\emptyset \sim \emptyset$.
+\textbf{集合的对等关系：}$A$，$B$是两个非空集合，若$\exists \varphi:A \to B, \varphi\mbox{为双射}$，则$A$，$B$对等，记为$A \sim B$.且$\emptyset \sim \emptyset$.
 
 集合的对等关系满足自反性，对称性与传递性.
 
@@ -307,8 +308,6 @@ Cantor集的性质：
 
 本节之后的内容不作要求.
 
-\newpage
-
 \appendix
 \section{布置的课后作业}
 \indent $1.(2)(4),2,3,5,6,8,9,10,11,12,16,17,19,22(3),24,25,26,27,30,31,33.$
@@ -316,7 +315,7 @@ Cantor集的性质：
 \section{课后作业的讲解}
 \indent 2.直接取极限的证明不对.不需要等价转换整个集合，使用集合间的关系会更好.
 
-8.构造集合之后可以将其分解为两个子集处理.
+8.构造集合$A_k = {x \in [0, 1]: f(x) \geqslant \frac{1}{k}}$之后可以将其分解为两个子集$A_k^{+},A_k^{-}$处理.
 
 9.需要证明：
 \begin{equation*}
@@ -324,5 +323,71 @@ Cantor集的性质：
 \end{equation*}.
 
 10.利用单射构造满射.
+
+11.构造单射$\varphi: A \to \mathbb{Q} \times \mathbb{Q}$.
+
+12.$A = \bigcup_{x \in A}{A \cap I_x}$，$I_x$可列.
+
+16.利用$\mathcal{F}$是代数的条件和第二问结论.
+
+19.先给出$\varepsilon$，再给出$\delta$，注意叙述的逻辑性.
+
+22(3),24,25.利用邻域定义或序列定义证明.作一个示意图会有所帮助.
+
+26.注意边界点和聚点的差异.利用邻域定义或序列定义证明.
+
+27(1).$d(x, A) = 0 \iff \forall \varepsilon > 0, \exists y \in A, s.t \quad d(x, y) < \varepsilon \iff \mbox{即$U(x, \varepsilon)$中包含$A$中的点} \iff x \in \overline{A}$.
+
+27(2).距离的三角不等式，取下确界，连续函数的定义.
+
+30.与例题类似.使用证明一个集合是闭集的第三种方法.
+
+31.有理数的稠密性.如下不等式（直接用定义构造）：
+\begin{equation*}
+	\sqrt{e^{x - \varepsilon} - 1} < r < \sqrt{e^{x + \varepsilon} - 1}, r \in \mathbb{Q}.
+\end{equation*}
+
+33.先将空集和全直线排除，再利用开集构造定理，说明$A$是开集时，$A$不是闭集.
+
+\section{一些闲谈}
+\indent 注意，以下内容仅代表本人观点。
+
+第一章结合部分数分内容，进一步让我们了解了集合.
+
+有一些有趣的套路，来跟大家分享一下：
+\begin{itemize}[itemindent=2em]
+	\item 分而治之.在证明集合相等的时候非常有用.通常先用基本的放缩，证明较为简单的一边，再用定义证明比较复杂的一边.
+	\item 对集合的有效分割.
+	\item 用示意图帮助自己证明.
+	\item 可列集的证明方式：定义，编号，集合分解.
+	\item 开集，闭集，导集，闭包等证明方式：定义方式，序列方式，邻域方式.
+\end{itemize}
+
+还有一些需要注意的点：
+\begin{itemize}[itemindent=2em]
+	\item 定理使用的正确性.
+	\item 条件使用的顺序.
+	\item 叙述的合理逻辑.
+\end{itemize}
+
+\section{示意图的示例（DEMO）}
+\indent 作为$TikZ$的使用实验，我制作了一个示意图.
+
+\begin{figure}[h]
+	\centering
+	\begin{tikzpicture}
+		\draw[thick] (-4, 0) -- (4, 0);
+		\draw (2,0) arc [start angle=0, end angle=15, radius=1] node[above] {$x - \varepsilon$};
+		\draw (2,0) arc [start angle=0, end angle=-15, radius=1];
+		\draw (-2,0) arc [start angle=180, end angle=165, radius=1] node[above] {$x + \varepsilon$};
+		\draw (-2,0) arc [start angle=180, end angle=195, radius=1];
+		\draw (1,0) arc [start angle=0, end angle=15, radius=1] node[above] {$p$};
+		\draw (1,0) arc [start angle=0, end angle=-15, radius=1];
+		\draw (-1,0) arc [start angle=180, end angle=165, radius=1] node[above] {$q$};
+		\draw (-1,0) arc [start angle=180, end angle=195, radius=1];
+	\end{tikzpicture}
+	\caption{Question 1.12 Example}
+	\label{fig:label}
+\end{figure}
 
 \end{document}
