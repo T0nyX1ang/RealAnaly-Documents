@@ -3,6 +3,7 @@
 \usepackage{extarrows}
 \usepackage{authblk}
 \usepackage{tikz}
+\usetikzlibrary{intersections}
 
 \title{实变第二章总结}
 
@@ -59,6 +60,8 @@
 	\item \textbf{事实2:} $m^*(A) < \infty, \forall \varepsilon > 0, \exists {I_k} \supset A, s.t. \quad \sum_{k = 1}^{\infty}|I_k| < m^*(A) + \varepsilon$.
 \end{itemize}
 
+注意：事实2可以由于$\varepsilon$的任意性可以进行改进，如$\varepsilon \to \frac{\varepsilon}{2^k}$，这是为了无限求和之后仍可保持$\varepsilon$.
+
 \textbf{一个重要的数分定理：设$a, b \in \mathbb{R}^1, \forall \varepsilon > 0, s.t. \quad a < b + \varepsilon$，则$a \leqslant b$.}
 
 外测度的性质：
@@ -91,6 +94,23 @@ $m^*(I) = |I|$，$I$为$\mathbb{R}^n$中方体.这是外测度与体积的对应
 
 \textbf{Caratheodory条件：}$m^*(A) = m^*(A \cap E) + m^*(A \cap E^C)$.
 
+\begin{center}
+	\begin{tikzpicture}
+	\draw (0, 0) circle [radius=1cm];
+	\draw (-0.1, 0.3) rectangle (3, 2);
+	\draw (0, -0.5) node {$E$};
+	\draw (0.5, 0.5) -- (1.5, -0.5);
+	\draw (1.5, -0.7)node {$I \cap E$};
+	\draw (2, 1) node {$I \cap E^C$};
+\end{tikzpicture} \qquad
+\begin{tikzpicture}
+	\draw (0, 0) circle [radius=1.5cm];
+	\draw (1.5, 0) circle [radius=1.5cm];
+	\draw (-0.8, 0) node {$A \cap E^C$};
+	\draw (0.8, 0) node {$A \cap E$};
+\end{tikzpicture}
+\end{center}
+
 \textbf{可测集：}$E \subset \mathbb{R}^n, \forall A \subset \mathbb{R}^n$，Caratheodory条件成立，称$E$为Lebesgue可测集.
 
 \textbf{可测集的测度：}若$E$为Lebesgue可测集，则称$m^*(E)$为$E$的Lebesgue测度，记为$m(E)$.
@@ -101,16 +121,33 @@ Caratheodory条件等价于$m^*(A) \geqslant m^*(A \cap E) + m^*(A \cap E^C)$成
 
 \textbf{零测集的子集为可测集.}
 
-\textbf{可数集是可测集，且测度为零，特别的$m(\mathbb{Q}) =0 )$.}
+\textbf{可数集是可测集，且测度为零，特别地，$m(\mathbb{Q}) =0$.}
 
 $\mathbb{R}^n$中的每个方体是可测集，且其测度等于方体的体积.（用Caratheodory条件，$J \cap {I^C} = \bigcap_{i = 1}^{k}{I_i}$，且这些集合互不相交.）
 
-可测集的性质：
+\textbf{可测集的性质：}
 \begin{itemize}[itemindent=2em]
 	\item 若$E_1, E_2, \cdots, E_n$为可测集，则$\bigcup_{i = 1}^{k}{E_k}$为可测集.
 	证明在$k = 2$时成立，$E = E_1 \cup E_2$，$E = E_1 \cup (E_2 - E_1) = E_1 \cup ({E_1}^C \cap E_2)$.
 	\item 若$E_1, E_2, \cdots, E_n$为互不相交的可测集，$A_i \subset E_i$，则$m^*(\bigcup_{i = 1}^{k}{A_i}) = \sum_{i = 1}^{k}{m^*(A_i)}$.
 	证明在$k = 2$时成立，$(A_1 \cup A_2) \cap E_1 = A_1$，$(A_1 \cup A_2) \cap {E_1}^C = A_2$.
+\end{itemize}
+
+\begin{center}
+	\begin{tikzpicture}
+		\draw (0, 0) circle [radius=1cm];
+		\draw (0, 0) circle [radius=1.5cm];
+		\draw (0, 0) node {$A_1$};
+		\draw (0.9, 0.9) node {$E_1$};
+		\draw (5, 0) circle [radius=1cm];
+		\draw (5, 0) circle [radius=1.5cm];
+		\draw (5, 0) node {$A_2$};
+		\draw (4.1, 0.9) node {$E_2$};
+		\node [below, align=justify] at (9, 0.5) {$(A_1 \cup A_2) \cap E_1 = A_1$ \\ $(A_1 \cup A_2) \cap {E_1}^C = A_2$};
+	\end{tikzpicture}		
+\end{center}
+
+\begin{itemize}[itemindent=2em]
 	\item 可测集的全体是一个$\sigma$-代数.
 	首先可测集的全体是一个代数，证明$\mathcal{M}(\mathbb{R}^n)$对不相交可列并封闭，利用上一个性质，Caratheodory条件并进一步取极限即可.
 	\item $\mathcal{B}(\mathbb{R}^n) \subset \mathcal{M}(\mathbb{R}^n)$，且包含关系为严格包含.
@@ -147,9 +184,24 @@ $\mathbb{R}^n$中的每个方体是可测集，且其测度等于方体的体积
 	\item 将$m(E)$分有限与无穷两种情况讨论.对于有限情况，利用外测度的事实2，用一列开方体${I_k}$覆盖之，作$G = \bigcup_{k = 1}^{\infty}{I_k}$，由测度可减性可知.
 	\item 对于无限情况，先找一列互不相交的可测集$\{A_k\}$，$m(A_k) < \infty$且$\mathbb{R}^n = \bigcup_{k = 1}^{\infty}{A_k}$，令$E_k = E \cap A_k$，则$m(E_k) < \infty$且$E = \bigcup_{k = 1}^{\infty}{E_k}$，这样将\textbf{无限测度转化至有限情况}.取$G_k \supset E_k, s.t.\quad m(G_k - E_k) < \frac{\varepsilon}{2^k}$，取$G = \bigcup_{k = 1}^{\infty}{G_k}$，$G - E \subset \bigcup_{k = 1}^{\infty}\{G_k - E_k\}$.使用测度单调性与次可列可加性即可.
 	\item 对于第二条，将闭集转化至开集的情况.$E - F = E \cap F^C = {(E^C)}^C \cap G = G - E^C, F = G^C$.
-	\item 对于第三条，利用$\varepsilon \to \frac{1}{k}$的转化，将极限转化为集列${G_k}$，作$G = \bigcap_{k = 1}^{\infty}{G_k}$，取极限即可，这个方法很重要.
-	\item 对于第四条，利用$\varepsilon \to \frac{1}{k}$的转化，将极限转化为集列${F_k}$，作$F = \bigcup_{k = 1}^{\infty}{F_k}$，取极限即可.
+	\item 对于第三条，利用$\varepsilon \to \frac{1}{k}$的转化，将极限转化为集列$\{G_k\}$，作$G = \bigcap_{k = 1}^{\infty}{G_k}$，取极限即可，这个方法很重要.
+	\item 对于第四条，利用$\varepsilon \to \frac{1}{k}$的转化，将极限转化为集列$\{F_k\}$，作$F = \bigcup_{k = 1}^{\infty}{F_k}$，取极限即可.
 \end{itemize}
+
+\begin{center}
+\begin{tikzpicture}
+	\draw[densely dashed] (-3, -2) rectangle (3, 2);
+	\draw (0, 0) circle [radius=1cm];
+	\draw (0, 0) circle [radius=1.2cm];
+	\draw (0, 0) node {$E^C$};
+	\draw (0, 1) node {$G$};
+	\draw (0, -1.1) -- (0.4, -1.3) node[below] {$G - E^C$};
+	\draw (-2, 1) node {$E$};
+	\draw (0, 1.5) node {$G^C$};
+	\draw (1.1, 0) -- (1.4, -0.3) node[below right] {$E - G^C$};
+	\node [below, align=justify] at (6, 2) {$F = G^C$ \\ $E - F = G - E^C$};
+\end{tikzpicture}
+\end{center}
 
 注意：对偶性可以简化很多计算.
 
