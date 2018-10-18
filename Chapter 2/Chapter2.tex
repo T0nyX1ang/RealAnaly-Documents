@@ -3,7 +3,8 @@
 \usepackage{extarrows}
 \usepackage{authblk}
 \usepackage{tikz}
-\usetikzlibrary{intersections}
+\usepackage{xcolor}
+\usetikzlibrary{intersections, calc}
 
 \title{实变第二章总结}
 
@@ -20,7 +21,7 @@
 \noindent https://github.com/T0nyX1ang/RealAnaly-Documents/blob/master/Chapter\%202/Chapter2.tex
 
 \section{引言}
-\indent 测度的四条性质：\textbf{非负性，可列可加性，平移不变性，可减性}.
+\indent 测度的四条性质：\textbf{非负性，可列可加性，平移不变性，可减性}.这个地方的测度是一般的测度，与之后定义的性质无冲突.
 
 区间的长度：
 \begin{equation*}
@@ -243,6 +244,12 @@ $[0, 1]$间存在不可测集，可以使用Zermelo选取公理构造.
 
 18.类似Cantor集构造方法，$a = 1 - c$，然后每次去掉的区间长度相应改变.
 
+19.先取足够大的$n_0$，用$A \cap [-n_0, n_0]$代替$A$.这样能用区间$[a, b]$覆盖$A$，然后构造函数$f(x) = m([a, x] \cap A), x \in [a, b]$，证明它是连续的，利用介值定理.
+
+20.正向用可测集的逼近性质，反向方法与本章习题第六题类似.
+
+21.先用可测集的逼近性质找到一个集合逼近$A$，然后用一个闭球截取$A$，即作$F_k = A \cap \overline{U(0, k)}$，找到足够大的$k_0$，使得$m(A - F_{k_0}) < \frac{\varepsilon}{2}$即可.
+
 \section{一些闲谈}
 \indent 注意，以下内容仅代表本人观点。
 
@@ -251,6 +258,23 @@ $[0, 1]$间存在不可测集，可以使用Zermelo选取公理构造.
 有一些有趣的套路，来跟大家分享一下:
 \begin{itemize}[itemindent=2em]
 	\item 开集与闭集的放缩，即$\varepsilon \to \frac{1}{k}$.这个方法首先转化极小量，然后通过放缩使得开集与闭集进一步逼近目标集合（测度或外测度的单调性），然后极小量趋向无穷，而已经构造好的集合与极小量无关，就将它与目标集合只相差一个零测集.这个方法很巧妙，而且对这类型的题目是通用的，因为开集，闭集，$G_{\delta}$，$F_{\sigma}$型集均可测，性质很好.
+	\begin{center}
+	\begin{tikzpicture}
+		\draw[red, line width=2pt] (0, 0) circle [radius=2];
+		\foreach \x in {1,...,50}
+			\draw (0, 0) circle [radius=2 - 1/\x];
+		\draw[->, line width=1pt, gray] (0, 0) -- (2, -2);
+		\node[below, align=justify] at (0, -2.2) {$F = \bigcup_{k = 1}^{\infty}{F_k}$};
+	\end{tikzpicture}
+	\qquad
+	\begin{tikzpicture}
+		\draw[red, line width=2pt] (0, 0) circle [radius=1];
+		\foreach \x in {1,...,50}
+			\draw (0, 0) circle [radius=1 + 1/\x];
+		\draw[->, line width=1pt, gray] (-2, -2) -- (0, 0);
+		\node[below, align=justify] at (0, -2.2) {$G = \bigcap_{k = 1}^{\infty}{G_k}$};
+	\end{tikzpicture}
+	\end{center}
 	\item 空间的缩小，将全空间缩小至$[0, 1]$上考虑一些问题，注意，求补集是可行的，因为有扩展的De Morgan定理：
 	\begin{align*}
 		E - \bigcup_{\alpha \in I}{A_{\alpha}} = \bigcap_{\alpha \in I}{E - A_{\alpha}} \\
@@ -258,7 +282,27 @@ $[0, 1]$间存在不可测集，可以使用Zermelo选取公理构造.
 	\end{align*}
 	但是处理开集与闭集时需要小心子集的开闭性质与全空间不完全相同的问题，可能需要通过集合的运算来“打磨”集合.
 	\item 可以利用已有的集合构造新的集合，也可以进行一些改造.如Cantor集的变形可以使测度增大.
-	\item ...
+	\item 对集合的适当截取.遇到直接取集合不能满足条件的时候，需要使用相应的开集或闭集截取这个集合，而截取的误差不能太大，应该保持在$\varepsilon$以内.这种方法的原理在于，构造了一个集列以后，利用测度的下连续性，将集列的极限反向转化为集合的可列并，而这个可列并的测度能够等于原来不满足条件的那个集合的测度，这样就能达到效果.如将无限的集合转化为集合与有限集合的交，将无界的集合转化为集合与有界集合的交等.
+	\begin{center}
+	\begin{tikzpicture}
+		\draw (-2, 0) -- (2, 0);
+		\draw (-1, -0.1) -- (-1, 0.1);
+		\draw (1, -0.1) -- (1, 0.1);
+		\draw[->, densely dashed] (0, 0.1) -- (-2, 0.1);
+		\draw[->, densely dashed] (0, -0.1) -- (2, -0.1);
+		\node at (5, 0) {$A \cap [-n, n] \to A$};
+	\end{tikzpicture}
+	\end{center}
+
+	\begin{center}
+	\begin{tikzpicture}
+		\draw [->] (-2, 0) -- (2, 0);
+		\draw [->] (0, -2) -- (0, 2);
+		\draw[densely dashed] (0, 0) circle [radius=1.5];
+		\draw (0.5, 3.7) .. controls (-2, 0) and (0, -2) .. (3.7, 0.5);
+		\node at (5, 0) {$A \cap \overline{U(0, k)} \to A$};
+	\end{tikzpicture}
+	\end{center}
 \end{itemize}
 
 还有一些需要注意的点：
