@@ -209,10 +209,62 @@ $\mathbb{R}^n$中的每个方体是可测集，且其测度等于方体的体积
 
 $[0, 1]$间存在不可测集，可以使用Zermelo选取公理构造.
 
+本节之后的内容不作要求.
+
 \appendix
 \section{布置的课后作业}
 \indent $1,4,5,6,7,8,9,12,13,15,16,17,18,19,20,21.$
 
 \section{课后作业的讲解}
+\indent 4.类似第一章$A$类12题的做法，将直线上的有理开区间转换为$\mathcal{R}^n$中用有理点构成的开方体。仍使用：$A = \bigcup_{x \in A}\{A \cap I_x\}$.
+
+5.$A - B, B - A \in \mathcal{M}(\mathbb{R}^n)$，$B = (A - (A - B)) \cup (B - A)$.
+
+6.$\varepsilon \to \frac{1}{k}$，套路与逼近定理一致.
+
+7.注意如果使用测度的可减性，需要说明测度有限.同时适用于测度公式中的移项操作.
+
+8.测度的下连续性，测度的上连续性.
+
+9.扩展的De Morgan公式可以让我们把全空间设为$[0, 1]$然后作$A$的补集.
+
+12.十进制无限小数的表示，类似Cantor集的构造，十分取其第八区间.
+
+13.利用开集定义，然后作邻域的内接方体.
+
+15.$G = [0, 1] - F$，以是否为空集为条件分情况讨论.
+
+16.$\overline{\mathbb{Q}_0} = [0, 1], \mathbb{Q}_0 = {x \in [0, 1]: x \in \mathbb{Q}^n}$.构造:
+\begin{equation*}
+	G = (\bigcup_{n = 1}^{\infty}{(r_n - \frac{\varepsilon}{2^{n + 1}}, r_n + \frac{\varepsilon}{2^{n + 1}})}) \cap (0, 1).
+\end{equation*}
+
+17.$F = [0, 1] - G$. $G$可以按照上一题方法构造.
+
+18.类似Cantor集构造方法，$a = 1 - c$，然后每次去掉的区间长度相应改变.
+
+\section{一些闲谈}
+\indent 注意，以下内容仅代表本人观点。
+
+第二章是对测度论的基本介绍，不涉及抽象测度空间的内容.
+
+有一些有趣的套路，来跟大家分享一下:
+\begin{itemize}[itemindent=2em]
+	\item 开集与闭集的放缩，即$\varepsilon \to \frac{1}{k}$.这个方法首先转化极小量，然后通过放缩使得开集与闭集进一步逼近目标集合（测度或外测度的单调性），然后极小量趋向无穷，而已经构造好的集合与极小量无关，就将它与目标集合只相差一个零测集.这个方法很巧妙，而且对这类型的题目是通用的，因为开集，闭集，$G_{\delta}$，$F_{\sigma}$型集均可测，性质很好.
+	\item 空间的缩小，将全空间缩小至$[0, 1]$上考虑一些问题，注意，求补集是可行的，因为有扩展的De Morgan定理：
+	\begin{align*}
+		E - \bigcup_{\alpha \in I}{A_{\alpha}} = \bigcap_{\alpha \in I}{E - A_{\alpha}} \\
+		E - \bigcap_{\alpha \in I}{A_{\alpha}} = \bigcup_{\alpha \in I}{E - A_{\alpha}}
+	\end{align*}
+	但是处理开集与闭集时需要小心子集的开闭性质与全空间不完全相同的问题，可能需要通过集合的运算来“打磨”集合.
+	\item 可以利用已有的集合构造新的集合，也可以进行一些改造.如Cantor集的变形可以使测度增大.
+	\item ...
+\end{itemize}
+
+还有一些需要注意的点：
+\begin{itemize}[itemindent=2em]
+	\item 测度可减性的条件.
+	\item 等式的书写，最右边的等号是最后一步的推导结果，最左边的等号是最先推导出的结果，这样可以增强可读性.
+\end{itemize}
 
 \end{document}
