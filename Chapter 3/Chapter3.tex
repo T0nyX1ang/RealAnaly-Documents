@@ -4,7 +4,7 @@
 \usepackage{authblk}
 \usepackage{tikz}
 \usepackage{xcolor}
-\usetikzlibrary{intersections, calc, bending, decorations.markings, arrows, shapes, positioning, decorations.pathreplacing}
+\usetikzlibrary{intersections, calc, bending, decorations.markings, arrows, shapes, positioning, decorations.pathreplacing, shadows, arrows.meta}
 
 \title{实变第三章总结}
 
@@ -281,6 +281,189 @@ Lusin定理的加强形式：设$E$是$\mathbb{R}^n$中的可测集，$f$是$E$�
 \indent $1,2,3,4,5,6,7,8,9,11,13,14,15,16,17,18(1),19,20(3)(4),21,22,24,25,27.$
 
 \section{课后作业的讲解}
+1. 取$r_k > a, r_k \searrow a$，则$E(f > a) = \bigcup_{k = 1}^{\infty}{E(f > r_k)}$，反例可以这样构造，记$A \mbox{为} [0, 1]$上的不可测集，构造：
+\begin{equation*}
+	f(x) = 
+	\begin{cases}
+		\sqrt{3}, \quad x \in A \\
+		\sqrt{2}, \quad x \in [0, 1] - A
+	\end{cases}
+\end{equation*}
+
+2.\textbf{取$n_0 > \frac{2}{b - a}$，（这样保证区间长度不会超出范围）}，利用$\bigcup_{k = n_0}^{\infty}{[\alpha, \beta]} = (a, b)$.
+
+3.$\forall a$，有$E(\frac{1}{g} \geqslant a) = [E(g > 0) \cap (E(ag \leqslant 1))] \cup [E(g < 0) \cap (E(ag > 1))]$.
+
+4.$\forall a$，有$E(f > a) = [E(|f| > a) \cap E(f \geqslant 0)] \cup [E(|f| < -a) \cap E(f \leqslant 0)]$. 反例可以这样构造，记$A \mbox{为} [0, 1]$上的不可测集，构造：
+\begin{equation*}
+	f(x) = 
+	\begin{cases}
+		1, \quad x \in A \\
+		-1, \quad x \in [0, 1] - A
+	\end{cases}
+\end{equation*}
+
+5.利用开集构造定理.
+
+6.利用Cauchy收敛准则.\[A = \bigcap_{k = 1}^{\infty}{\bigcup_{N = 1}^{\infty}{\bigcap_{m = N}^{\infty}{\bigcap_{n = N}^{\infty}{E(|f_m(x) - f_n(x)| < \frac{1}{k})}}}}\].
+
+7.仿照一维的方法，用简单函数列逼近连续函数.
+
+8.由可导函数推出连续函数，补充定义$f(x) = f(b), x > b$\textbf{（这是为了之后定义的函数列不超出原函数的定义域）}，然后由导数定义：$f'(x) = \lim_{h \to 0}{\frac{f(x + h) - f(x)}{h}} = \lim_{n \to \infty}{\frac{f(x + \frac{1}{n}) - f(x)}{\frac{1}{n}}}$.则可构造函数列$f_n(x) = \frac{f(x + \frac{1}{n}) - f(x)}{\frac{1}{n}} \to f(x)$，证之可测.此时说明了$f$在$[a, b)$上可测，又有$\{x \in [a, b]: f(x) > c\} = \{x \in [a, b): f(x) > c\} \cup \{x = b: f(x) > c\}$.可知$b$点处的值不影响函数的可测性.
+
+9.证$\{x \in \mathbb{R}^n: f(x + h) > a\} = \{x \in \mathbb{R}^n: f(x) > a\} - h$.
+
+11.单调递增可以根据定义证明.取$t_n > t, t_n \searrow t$，由集列的单调性，$E(f \leqslant t) = \bigcap_{n = 1}^{\infty}{E(f \leqslant t_n)}$，再由测度的上连续性，$m(E(f \leqslant t))= \lim_{n \to \infty}{m(E(f \leqslant t_n))}$.（由单调函数的性质，只需证明$t_n \searrow t$的情况即可，一般情况下需要说明从任意方向趋近均成立.）
+
+13.设$\{r_n\} \subset [a, b], \forall r_n \in \mathbb{Q}^1$.证明
+\begin{equation*}
+	\{x \in E: g(x) > c\} = \bigcup_{n = 1}^{\infty}{x \in E: f(x, r_n) > c}.
+\end{equation*}
+
+($\Leftarrow$)$x \in E$，若$\exists n, s.t. \quad f(x, r_n) > c$，则$g(x) \geqslant f(x, r_n) > c$.
+
+($\Rightarrow$)$g(x) > c$，则$\exists y_0 \in [a, b], s.t. \quad g(x) = f(x, y_0)$，由于$f(x, y)$在$y_0$处连续，当$\exists \delta, d(r_n, y) < \delta, s.t. \quad f(x, r_n) > c$.
+
+14.用反证法，由连续性$\exists \delta, E(f \neq g) \supset (x_0 - \delta, x_0 + \delta)$，$m(E(f \neq g)) \geqslant m((x_0 - \delta, x_0 + \delta)) = 2\delta > 0$.
+
+16.将无限的和分成两个部分：有限部分和余项.这样避免了无限求和的问题.
+\begin{equation*}
+	m(E(|f_n - f| \geqslant \varepsilon)) \leqslant \sum_{k = 1}^{k_0}{m(x \in E_k:|f_n(x) - f(x)| \geqslant \varepsilon)} + \sum_{k = k_0 + 1}^{\infty}{m(E_k)}.
+\end{equation*}
+
+17(1).$x \in E - E_1 \cap E_2, f(x) = \lim_{n \to \infty}{f_n(x)} = g(x)$.
+
+17(2).用两次Risez定理.注意：第二次所选的子列应当是第一次所选的子列的子列.
+
+18.$\delta \to \frac{1}{k}$.为了表示方便可以用补集处理.
+
+19.用Risez定理.
+\begin{equation*}
+	\varliminf_{n \to \infty}{f_n(x)} \leqslant \lim_{k \to \infty} \leqslant \varlimsup_{n \to \infty}{f_n(x)}
+\end{equation*}
+
+20(3).$E(|f_n - f| + |g_n - g| \geqslant \varepsilon) \subset E(|f_n - f| \geqslant \frac{\varepsilon}{2}) \cup E(|g_n - g| \geqslant \frac{\varepsilon}{2})$
+
+20(4).用Risez定理的应用（书上的定理3.12），再使用数列极限的乘法.注意：第二次所选的子列应当是第一次所选的子列的子列.
+
+22.用Risez定理.$f_{n_k}(x) \to f(x) \quad a.e. \Rightarrow f_n(x) \to f(x) \quad a.e.$
+
+24.令$E_0 = E(|f| = \infty) = 0. E_{0_n} = E(|f| > n)$，则$E_{0_n} \searrow, E_0 = \bigcap_{n = 1}^{\infty}{E_{n_0}}$.由测度的上连续性,
+\begin{equation*}
+	\lim_{n \to \infty} m(E_0) = m(\bigcap_{n = 1}^{\infty}{E_{0_n}}) = m(E_0) = 0.
+\end{equation*}
+$\forall \delta > 0 \exists n_0, s.t. m(A_{n_0}) < \delta$，令$m(E - A) = m(A_{n_0}) < \delta$即为所求.
+
+25.对$F^C$使用开集构造定理，将有限区间端点用线段相连，无限区间用有限的端点处的函数值延拓.即：
+\begin{equation*}
+	g(x) = 
+	\begin{cases}
+		f(x), \quad x \in F \\
+		\frac{f(b_i) - f(a_i)}{b_i - a_i} (x - a_i) + f(a_i), \quad x \in (a_i, b_i) \\
+		f(a_i), \quad x \in (-\infty, a_i) \\
+		f(b_i), \quad x \in (b_i, +\infty)
+	\end{cases}
+\end{equation*}
+
+27.$\delta \to \frac{1}{k}$.从而得到$f$在$F$上可测且$m(E - F) = 0$.
+
+\section{一点闲谈}
+\indent 注意，以下内容仅代表本人观点。
+
+第三章是对可测函数的基本介绍，不涉及抽象测度空间的内容.
+
+有一些有趣的套路，来跟大家分享一下:
+
+\begin{itemize}[itemindent=2em]
+	\item 为避免对系数的讨论而对集合进行的拆分：例如在证明$g$可测可以推出$\frac{1}{g}$可测，为了避免$a$的符号造成的讨论，我们使用了：
+	$E(\frac{1}{g} > a) = (E(g > 0) \cap E(ag \leqslant 1)) \cup (E(g < 0) \cap E(ag > 1))$
+	事实上，上面的式子等价于下面的分类讨论：
+	\begin{equation*}
+		E(\frac{1}{g} > a) = 
+		\begin{cases}
+			E(g > 0) \cap E(g < \frac{1}{a}), \quad a > 0 \\ 
+			E(g > 0), \quad a = 0 \\
+			E(g > 0) \cup (E(g < 0) \cap E(g < \frac{1}{a})), \quad a < 0
+		\end{cases}
+	\end{equation*}
+	改进的方法首先避免了特殊情况的问题，将$a = 0$合并到了$ag \leqslant 1$中.然后是这个方法的核心部分，分割（以本题为例）：
+	\begin{center}
+		\begin{tikzpicture}
+			\draw (0, 0) rectangle (8, 5);
+			\draw (4, 2.5) circle[radius=1.5];
+			\draw (1.5, 0) -- (6.5, 5);
+			\draw [densely dashed, line width=2.5pt] (4, 1) -- (4, 4);
+			\node [below, align=justify] at (1, 4) {$ag > 1$};
+			\node [below, align=justify] at (6, 1) {$ag \leqslant 1$};
+			\node [above left, align=justify] at (4, 2.5) {$g > 0$};
+			\node [below right, align=justify] at (4, 2.5) {$g < 0$};
+			\draw [general shadow={fill=gray}] (4, 2.5) -- (4, 4) arc [start angle=90, end angle=45, radius=1.5] -- (4, 2.5) -- cycle;
+			\draw [general shadow={fill=gray}] (4, 2.5) -- (4, 1) arc [start angle=-90, end angle=-135, radius=1.5] -- (4, 2.5) -- cycle;
+			\draw (4.5, 3.5) -- (6, 2.5);
+			\draw (3.5, 1.5) -- (6, 2.5);
+			\node [right, align=justify] at (6, 2.5) {$E(\frac{1}{g} > a)$};
+ 		\end{tikzpicture}
+	\end{center}
+	\textbf{总结一下这个方法的要点：首先需要两个前提，一是一个性质足够好的集合可以被拆为不相交的两部分，二是全空间可以被分成不相交的两部分，然后需要使得所求的集合满足“两交一并”的形式，这样就能使得相交的子集性质足够好，然后取并集之后的集合也足够好即可.具体可以看以下的图示：}
+	\begin{center}
+		\begin{tikzpicture}
+			\draw (0, 0) rectangle (8, 5);
+			\draw (4, 2.5) circle[radius=1.5];
+			\draw (1.5, 0) -- (6.5, 5);
+			\draw [densely dashed, line width=2.5pt] (4, 1) -- (4, 4);
+			\node [below, align=justify] at (1, 4) {$S$};
+			\node [below, align=justify] at (6, 1) {$S^C$};
+			\node [above left, align=justify] at (4, 2.5) {$A_1 \subset A$};
+			\node [below right, align=justify] at (3.9, 2.5) {$A_2 \subset A$};
+			\draw [general shadow={fill=gray}] (4, 2.5) -- (4, 4) arc [start angle=90, end angle=45, radius=1.5] -- (4, 2.5) -- cycle;
+			\draw [general shadow={fill=gray}] (4, 2.5) -- (4, 1) arc [start angle=-90, end angle=-135, radius=1.5] -- (4, 2.5) -- cycle;
+			\node [below, align=justify] at (4, 0) {$\qquad \quad A_1 \cap A_2 = \emptyset$ \\ $E = (A_1 \cap S) \cup (A_2 \cap S^C)$};
+ 		\end{tikzpicture}
+	\end{center}
+	\item Risez定理的应用：\textbf{在一个子列之中再取一个子列}，对于\textbf{多个函数列}的收敛相当有效.因为如果对于不同的函数列分别使用不同的子列，这些不同的子列之间可能不存在任何关系，从而无法在不同的子列之间创造联系.当然在一个子列中取一个子列利用了一个原理，如果$f_n \stackrel{m}{\longrightarrow} f$，则$\{f_n\}$的任意子列也依测度收敛于$f$.
+	\item 补集，可列交，可列并与新的集合构造套路：在第二章中，我们曾经提到了可测集的逼近性质，在那个时候，作出$\varepsilon \to \frac{1}{k}$的代换，然后通过可列交可列并的构造，将可测集与$G_{\delta}, F_{\sigma}$型集之间的差距变为一个零测集，但是到了第三章，随着三大收敛性质的引入，\textbf{一个函数列的主要性质从整个定义域缩小至整个定义域减去一个零测集}，这实际上是第二章的一个补集，所以有时候我们需要构造一个补集来解决一些收敛的问题，然后再用推广的De Morgan定理，加上可能会使用的测度的上连续性，下连续性，可列可加性与有限可加性，就可以解决问题了.当然，有时需要测度有限的条件限制，有时则需要使用一个\textbf{新的构造}：$\delta \to \frac{\delta}{2^k}$，这是为了求和之后仍然保持$\delta$的大小.相关示例可以参照\textbf{附录D}的定理证明中的相关步骤.
+\end{itemize}
+
+还有一些需要注意的点：
+
+\begin{itemize}[itemindent=2em]
+	\item 对于反例的构造（其实应当推广到所有例子的构造），应当\textbf{实例化}，也就是在具体的定义域上，说明一个具体的值域，并保证所构造的定义域和值域与数学原理不矛盾.
+	\item 对于例子的构造可以画一个示意图来辅助，但是注意这个示意图需要包含题目要求的全部要素，同时尽量简单.这时需要注意思维的严谨性.如习题第25题可以这样作图：
+	\begin{center}
+		\begin{tikzpicture}
+			\draw [-{Stealth[black]}, line width=0.8pt] (-5, 0) -- (5, 0);
+			\draw [{Bracket[black, width=10pt]}-{Bracket[black, width=10pt]}, line width=0.8pt] (-4, 0) -- (-2.5, 0);
+			\draw [{Bracket[black, width=10pt]}-{Bracket[black, width=10pt]}, line width=0.8pt] (-2, 0) -- (0.5, 0);
+			\draw [{Bracket[black, width=10pt]}-{Bracket[black, width=10pt]}, line width=0.8pt] (2, 0) -- (2.5, 0);
+			\draw [{Parenthesis[black, width=10pt]}-{Parenthesis[black, width=10pt]}, line width=0.8pt] (-2.5, 0) -- (-2, 0);
+			\draw [{Parenthesis[black, width=10pt]}-{Parenthesis[black, width=10pt]}, line width=0.8pt] (0.5, 0) -- (2, 0);
+			\draw [{Parenthesis[black, width=10pt]}-, line width=0.8pt] (2.5, 0) -- (5, 0);
+			\draw [-{Parenthesis[black, width=10pt]}, line width=0.8pt] (-5, 0) -- (-4, 0);
+			\draw (-4, 1) .. controls (-3.5, 3) and (-3, 7) .. (-2.5, 5);
+			\draw (-2, 3) .. controls (-1.5, 2) and (-1, 2) .. (0.5, 2.5);
+			\draw (2, 5) .. controls (2.2, 3) and (2.4, 3) .. (2.5, 0.5);
+			\draw [densely dashed] (-4, 1) -- (-6, 1);
+			\draw [densely dashed] (2.5, 0.5) -- (6, 0.5);
+			\draw [densely dashed] (-2.5, 5) -- (-2, 3);
+			\draw [densely dashed] (0.5, 2.5) -- (2, 5); 
+		\end{tikzpicture}
+	\end{center}
+	\item 每个条件都有它的作用，如果存在没有使用的条件，需要注意证明的正确性.
+	\item 注意数分知识在实变中的运用.
+\end{itemize}
+
+补充依测度收敛的一些性质（习题$17,20,21$）：
+\begin{itemize}[itemindent=2em]
+	\item $f_n \stackrel{m}{\longrightarrow} f, f_n \stackrel{m}{\longrightarrow} g \Rightarrow f = g \quad a.e.$
+	\item 一些封闭性质：
+	\begin{align*}
+		f_n \stackrel{m}{\longrightarrow} f, g_n \stackrel{m}{\longrightarrow} g & \Rightarrow |f_n| \stackrel{m}{\longrightarrow} |f|\\
+																				 & \Rightarrow cf_n \stackrel{m}{\longrightarrow} cf \\
+																				 & \Rightarrow f_n + g_n \stackrel{m}{\longrightarrow} f + g \\
+																(m(E) < \infty)	 & \Rightarrow f_n g_n \stackrel{m}{\longrightarrow} fg \\
+																(m(E) < \infty)	 & \Rightarrow |f_n|^p \stackrel{m}{\longrightarrow} |f|^p, p > 0.
+	\end{align*}
+\end{itemize}
 
 \section{部分定理的证明与相关反例的构造}
 \subsection{收敛关系的一些相互推导}
