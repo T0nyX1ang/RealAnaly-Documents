@@ -1,0 +1,611 @@
+\documentclass[bwprint, withoutpreface]{cumcmthesis}
+
+\usepackage{extarrows}
+\usepackage{authblk}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usetikzlibrary{intersections, calc, bending, decorations.markings, arrows, shapes, positioning, decorations.pathreplacing, shadows, arrows.meta}
+\newcommand*{\dif}{\mathop{}\!\mathrm{d}}
+
+\title{实变第四章总结}
+
+\begin{document}
+\maketitle
+\noindent Author: Tony Xiang
+
+\noindent Full Document can be acquired here: 
+
+\noindent https://github.com/T0nyX1ang/RealAnaly-Documents/blob/master/Chapter\%204/Chapter4.pdf
+
+\noindent Full Source code can be downloaded here:
+
+\noindent https://github.com/T0nyX1ang/RealAnaly-Documents/blob/master/Chapter\%204/Chapter4.tex
+
+\section{Lebesgue积分的定义}
+分三步定义：
+\subsection{非负简单函数的积分：}
+\indent 定义：设$f(x) = \sum_{i = 1}^{k}{a_i\chi_{A_i}(x)}$是$E$上的非负简单函数，其中$\{A_1, A_2, \cdots, A_k\}$是$E$的一个可测分割，$a_i \in \mathbb{R}^n, i = 1, 2, \cdots, k$.定义$f$在$E$上的积分为：
+\begin{equation*}
+	\int_E{f} \dif x = \sum_{i = 1}^{k}{a_i m(A_i)}
+\end{equation*}
+\begin{equation*}
+	0 \leqslant \int_E{f} \dif x \leqslant \infty, \mbox{若} \int_E{f} \dif x < \infty, \mbox{则}f \in L(E).
+\end{equation*}
+
+注意，该积分的值不依赖$f$的表达式的选取.证明可取另一个可测分割$\{B_i\}$，则有$m(A_i) = \sum_{j = 1}^{l}{m(A_i \cap B_j)}, (i = 1, 2, \cdots, k), m(B_j) = \sum_{i = 1}^{k}{m(A_i \cap B_j)}, (j = 1, 2, \cdots, l)$， $A_i \cap B_j \neq \emptyset, a_i = b_j$，可得 \[ \sum_{i = 1}^{k} a_i m(A_i) = \sum_{i = 1}^{k}{\sum_{j = 1}^{l}{a_i m(A_i \cap B_j)}} = \sum_{j = 1}^{l}{\sum_{i = 1}^{k}{b_j m(A_i \cap B_j)}} = \sum_{j = 1}^{l}{b_j m(B_j)} \]
+
+注意，$\int_{[a, b]} f \dif x$为函数$y= f(x)$的下方图形的积分.
+
+性质（Part 1, $f, g$为非负简单函数）：
+\begin{itemize}[itemindent=2em]
+	\item（特征函数的性质） \[ A \subset E \in \mathcal{M}(\mathbb{R}^n), \int_E \chi_A(x) \dif x = m(A). \]特别地，\[ \int_E \chi_E(x) \dif x = m(E). \]
+	\item（数乘的性质） \[ \int_E cf \dif x = c \int_E f \dif x \quad (c \geqslant 0). \]
+	\item（加法的性质） \[ \int_E f + g \dif x = \int_E f \dif x + \int_E g \dif x. \]
+	\item（单调性）\[ f \leqslant g \mathop{} \! \mathrm{a.e.} \Leftarrow \int_E f \dif x \leqslant \int_E g \dif x. \]
+\end{itemize}
+
+第一、二条性质的证明可以直接利用定义，第三条性质可以将两个函数的可测分割记为一样的，然后使用第一条性质，第四条性质有$m(E_i) > 0, a_i \leqslant b_i$，然后使用定义证明.
+
+注意，Lebesgue积分充分利用了零测集对于积分值没有影响的特点，所以在表示不等关系的时候，一般使用“几乎处处”的条件就足够了.
+
+\subsection{非负可测函数的积分}
+\indent 引理（证明略）：设$\{f_n\}$是$E$上单调递增的非负简单函数列，
+\begin{itemize}[itemindent=2em]
+	\item 若$g$是$E$上的非负简单函数，且$\lim_{n \to \infty} f_n(x) \geqslant g(x)$，则\[ \lim_{n \to \infty}{\int_E f_n \dif x \geqslant \int_E g \dif x} \]
+	\item 若$\lim_{n \to \infty}{f_n(x) = f(x), x \in E}$，则 \[ \lim_{n \to \infty}{\int_E f_n \dif x} = \sup{\{ \int_E g \dif x: g \in S^+{E}, g \geqslant f \}} \]，S+(E)表示$E$上的非负简单函数的全体.
+\end{itemize}
+
+定义：设$f$是$E$上的非负可测函数，$f_n$是$E$上的非负可测函数列，且$f_n \nearrow f$，定义$f$在$E$上的积分为：
+\begin{equation*}
+	\int_E f \dif x = \lim_{n \to \infty} \int_E f_n \dif x 
+\end{equation*}
+\begin{equation*}
+	0 \leqslant \int_E{f} \dif x \leqslant \infty, \mbox{若} \int_E{f} \dif x < \infty, \mbox{则}f \in L(E).
+\end{equation*}
+
+同样，$f$在$E$上的积分值不依赖与$\{f_n\}$的选取.
+
+性质（Part 2, $f, g$为非负可测函数）：
+\begin{itemize}[itemindent=2em]
+	\item（数乘的性质） \[ \int_E cf \dif x = c \int_E f \dif x \quad (c \geqslant 0). \]
+	\item（加法的性质） \[ \int_E f + g \dif x = \int_E f \dif x + \int_E g \dif x. \]
+	\item（单调性）\[ f \leqslant g \mathop{} \! \mathrm{a.e.} \Rightarrow \int_E f \dif x \leqslant \int_E g \dif x. \]
+\end{itemize}
+
+证明：第一条性质显然成立，第二条性质可以用两个非负函数列分别逼近$f$和$g$，第三条性质可以选取适当的$\{f_n\}, \{g_n\}, f_n \leqslant g_n, n \geqslant 1$，且有$f_n \nearrow f, g_n \nearrow g$，则有 \[ \int_E f \dif x = \lim_{n \to \infty}{\int_E f_n \dif x} \leqslant \lim_{n \to \infty}{\int_E g_n \dif x} = \int_E g \dif x. \]
+
+\subsection{一般可测函数的积分}
+\indent 定义：设$f$是$E$上的可测函数，若$\int_E f^+ \dif x, \int_E f^- \dif x$至少有一个是有限值，则$f$在$E$上的积分存在，且定义为：
+\begin{equation*}
+	\int_E f \dif x = \int_E f^+ \dif x - \int_E F^- \dif x.
+\end{equation*}
+
+若$\int_E f^+ \dif x, \int_E f^- \dif x$都是有限值，则$f \in L(E)$. 将$[a, b]$区间上的Lebesgue积分记为$\int_{a}^{b}{f \dif x}$.
+
+基本的可积条件（Part 3, $f, g$为一般函数）：
+\begin{itemize}[itemindent=2em]
+	\item $g \in L(E), f(x) \leqslant g(x), \mathop{} \! \mathrm{a.e.} x \in E \mbox{或} f(x) \geqslant g(x), \mathop{} \! \mathrm{a.e.} x \in E$，$f$在$E$上的积分存在.
+	\item $g \in L(E), |f(x)| \leqslant g(x), \mathop{} \! \mathrm{a.e.} x \in E$，则$f \in L(E)$.
+	\item $f \in L(E) \Leftrightarrow |f| \in L(E)$.
+	\item $m(E) < \infty, \exists M, |f| \leqslant M, f \in L(E)$.
+\end{itemize}
+
+证明：第一条性质有$f^+(x) \leqslant g^+(x) \mathop{} \! \mathrm{a.e.} x \in E \mbox{或} f^-(x) \leqslant g^-(x) \mathop{} \! \mathrm{a.e.} x \in E$.，然后用积分的单调性可得$\int_E f^+ \dif x, \int_E f^- \dif x$至少有一个是有限值.第二条性质兼具第一条性质的条件，故有可积性.第三条性质$|f| = f^+ + f^-$，可得$\int_E |f| \dif x \mbox{是有限值} \Leftrightarrow \int_E f^+ \dif x, \int_E f^- \dif x \mbox{都是有限值}$.第四条性质将$g(x)=M, x \in E$作为控制函数即可证明.
+
+\textbf{一个通用的证明过程：从非负简单函数到非负可测函数再到一般函数的证明方法.}
+
+\begin{center}
+\begin{tikzpicture}
+[
+basic/.style={
+% The shape:
+rectangle,
+% The size:
+minimum height=6mm,
+% The border:
+very thick,
+draw=red!50!black!50, % 50% red and 50% black,
+% and that mixed with 50% white
+% The filling:
+top color=white, % a shading that is white at the top...
+bottom color=red!50!black!20, % and something else at the bottom
+},
+proof/.style={
+% The shape:
+rectangle,
+% The size:
+minimum height=6mm,
+% The border:
+very thick,
+draw=gray!50!black!50, % 50% red and 50% black,
+% and that mixed with 50% white
+% The filling:
+top color=white, % a shading that is white at the top...
+bottom color=gray!50!black!20, % and something else at the bottom
+},
+adapter/.style={
+% The shape:
+rectangle,
+% The size:
+minimum width=3cm,
+minimum height=6mm,
+% The border:
+very thick,
+draw=green!50!black!50, % 50% red and 50% black,
+% and that mixed with 50% white
+% The filling:
+top color=white, % a shading that is white at the top...
+bottom color=green!50!black!20, % and something else at the bottom
+},
+decorator/.style={
+% The shape:
+rectangle,
+% The size:
+minimum width=1cm,
+minimum height=6mm,
+% The border:
+very thick,
+draw=blue!50!black!50, % 50% red and 50% black,
+% and that mixed with 50% white
+% The filling:
+top color=white, % a shading that is white at the top...
+bottom color=blue!50!black!20, % and something else at the bottom
+}
+]
+    \node[below, align=justify, basic] (a) at (2.5, 0) {非负简单函数};
+    \node[below, align=justify, decorator] (c) at (12.5, 0) {一般函数};
+    \node[below, align=justify, adapter] (b) at (7.5, 0) {非负可测函数};
+    \node[below, align=justify, proof] (d1) at (-2, -1.5) {定义};
+    \node[below, align=justify, proof] (d2) at (2, -1.5) {单增的非负简单函数};
+    \node[below, align=justify, proof] (d3) at (8, -1.5) {正部与负部};
+    \draw[-{Stealth[black]}, line width=1pt] (a.east) -- (b.west);
+    \draw[-{Stealth[black]}, line width=1pt] (b.east) -- (c.west);
+    \draw[-{Stealth[black]}, line width=1pt, densely dashed] (d1.east) -- (a.west);
+    \draw[-{Stealth[black]}, line width=1pt, densely dashed] (d2.east) -- (b.west);
+    \draw[-{Stealth[black]}, line width=1pt, densely dashed] (d3.east) -- (c.west);
+\end{tikzpicture}
+\end{center}
+
+
+\textbf{积分区域的变化与特征函数的关系：设$f$在$E$上的积分存在，$A$是$E$的可测子集，则$f$在$A$上的积分存在，且\[ \int_A f \dif x = \int_E f \chi_A \dif x \]同样有$f \in L(E) \Rightarrow f \in L(A).$}（证明方法为以上的分三个步骤的方法，第一步按定义证明，将$E$上的可测分割限定到$A$上；第二步取$f_n \chi_A \nearrow f \chi_A$；第三步利用正部和负部处理一般函数）
+
+以上的定理常常用在证明\textbf{多个积分区域不统一}的问题中.
+
+积分的平移不变性：$f(x) \in L(\mathbb{R}^n), h \in \mathbb{R}^n, \mbox{则} f(x + h) \in L(\mathbb{R}^n)$，且有
+\begin{equation*}
+	\int_{\mathbb{R}^n} f(x + h) \dif x = \int_{\mathbb{R}^n} f(x) \dif x.
+\end{equation*}
+
+同样可以分三步证明，其中第一步用到测度的平移不变性.后面两步类似.
+
+\section{积分的初等性质}
+\subsection{线性性}
+若$f,g \in L(E)$，则$cf, f + g \in L(E)$,
+\begin{equation*}
+	\int_E cf \dif x = c \int_E f \dif x
+\end{equation*}
+\begin{equation*}
+	\int_E (f + g) \dif x = \int_E f \dif x + \int_E g \dif x
+\end{equation*}
+
+证明：$f \in L(E) \Rightarrow |f| \in L(E)$，则\[ \int_E |cf| \dif x = \int_E |c||f| \dif x = |c| \int_E |f| \dif x < \infty. \]
+
+故$|cf| \in L(E)$，$cf \in L(E)$，类似有$|f + g| \leqslant |f| + |g| \Rightarrow f + g \in L(E).$利用
+
+\begin{equation*}
+	(cf)^+ =
+	\begin{cases}
+		cf^+ \quad c \geqslant 0 \\
+		-cf^- \quad c \geqslant 0
+	\end{cases}
+\end{equation*}
+\begin{equation*}
+	(cf)^- =
+	\begin{cases}
+		cf^- \quad c \geqslant 0 \\
+		-cf^+ \quad c \geqslant 0
+	\end{cases}
+\end{equation*}
+\begin{equation*}
+	\int_E cf \dif x = \int_E cf^+ \dif x - \int_E cf^- \dif x = c \int_E f^+ \dif x - c \int_E f^- \dif x = c \int_E f \dif x.
+\end{equation*}
+\begin{equation*}
+	(f + g)^+ - (f + g)^- = f + g = f^+ - f^- + g^+ - g^- \Rightarrow (f + g)^+ + f^- + g^- = f^+ + g^+ + (f + g)^-
+\end{equation*}
+\begin{align*}
+	\int_E (f + g) \dif x & = \int_E (f + g)^+ \dif x - \int_E (f + g)^- \dif x \\
+						  & = \int_E f^+ \dif x - \int_E f^- \dif x + \int_E g^+ \dif x - \int_E g^- \dif x \\  
+						  & = \int_E f \dif x + \int_E g \dif x
+\end{align*}
+
+\subsection{对积分域的有限可加性}
+设$f \in L(E), A_1 \cap A_2 = \emptyset, E = A_1 \cup A_2,$则 \[	\int_E f \dif x = \int_{A_1} f \dif x + \int_{A_2} f \dif x \]
+
+证明：$f \in L(A_1), f \in L(A_2)$，得到$f\chi_{A_1}, F\chi_{A_2} \in L(E)$，有 \[ \int_{A_1} f \dif x + \int_{A_2} f \dif x = \int_E f \chi_{A_1} \dif x + \int_E f \chi_{A_2} = \int_E (f \chi_{A_1} + f \chi_{A_2}) \dif x = \int_E f \dif x. \]
+
+同样可证有限情况：$f \in L(E)$，$\{A_1, A_2, \cdots, A_n\}$为$E$的一个可测分割，则有：
+\begin{equation*}
+	\int_E f \dif x = \sum_{k = 1}^{n}{\inf_{A_k}{f \dif x}}
+\end{equation*}
+
+\subsection{积分的单调性与不等关系}
+设$f, g$在$E$上的积分存在，则：
+\begin{itemize}[itemindent=2em]
+	\item $f \leqslant g \Rightarrow \int_E f \dif x \leqslant \int_E g \dif x$.
+	\item $f = g \mathop{} \! \mathrm{a.e.} \Rightarrow \int_E f \dif x = \int_E g \dif x$.
+	\item $f \geqslant 0 \mathop{} \! \mathrm{a.e.} A, B \subset E, A \subset B \Rightarrow \int_A f \dif x \leqslant \int_B f \dif x$.
+	\item $f = 0 \mathop{} \! \mathrm{a.e.} \Rightarrow \int_E f \dif x = 0$.
+	\item $m(E) = 0, \forall f(x), x \in E \Rightarrow \int_E f \dif x = 0$
+	\item $f \in L(E), |\int_E f \dif x| \leqslant \int_E |f| \dif x$.
+\end{itemize}
+
+证明：（1）若在$E$上，$f \leqslant g \mathop{} \! \mathrm{a.e.}$，则$f^+ \leqslant g^+, f^- \geqslant g^- \mathop{} \! \mathrm{a.e.}$ 则
+\begin{equation*}
+	\int_E f^+ \dif x \leqslant \int_E g^+ \dif x, \int_E f^- \dif x \geqslant \int_E g^+ \dif x
+\end{equation*}
+\begin{equation*}
+	\int_E f \dif x = \int_E f^+ \dif x - \int_E f^- \dif x \leqslant \int_E g^+ \dif x - \int_E g^- \dif x = \int_E g \dif x.
+\end{equation*}
+
+（2）由（1）的对偶性可得.
+
+（3）由$f \chi_A(x) \leqslant f \chi_B(x), x \in E$使用（1）的结论即可.
+
+（4）由（2）可得.
+
+（5）利用$\int_E f = 0$推出$f = 0 \mathop{} \! \mathrm{a.e.}$由（4）可得.
+
+（6）对$-|f| \leqslant f \leqslant |f|$积分即可.
+
+\subsection{Lebesgue积分的原始定义}
+设$m(E) < \infty$，$f$是$E$上可测函数，$c \leqslant f(x) < d,(x \in E), \forall n \in \mathbb{N}^+$，设$c = y_0 < y_1 < \cdots < y_n = d$为$[c, d]$的一个分割，令$\lambda = \max_{1 \leqslant i \leqslant n}{y_i - y_{i - 1}}$.则
+\begin{equation*}
+	\int_E f \dif x = \lim_{\lambda \to 0}{\sum_{i = 1}^{n}{y_{i - 1} \cdot m(E(y_{i - 1} \leqslant f < y))}}.
+\end{equation*}
+
+证明：$f$是有限测度集上的有界可测函数，则$f \in L(E)$，令$E_i = E(y_{i - 1} - y{i}), (i = 1, 2, \cdots, n)$，则$\{E_i\}$为$E$的一个可测分割，利用积分的单调性与对积分域的有限可加性，有
+\begin{equation*}
+	\sum_{i = 1}^{n}{y_{i - 1}} m(E_i) = \sum_{i = 1}^{n}{\int_{E_i} y_{i - 1} \dif x} \leqslant \sum_{i = 1}^{n}{\int_{E_i} f \dif x} = \int_E f \dif x.
+\end{equation*}
+\begin{equation*}
+	\int_E f \dif x \leqslant \sum_{i = 1}^{n}{y_i m(E_i)}
+\end{equation*}
+
+所以有
+
+\begin{align*}
+	 0 & \leqslant \int_E f \dif x - \sum_{i = 1}^{n}{y_{i - 1}m(E_i)} \leqslant \sum_{i = 1}^{n}{y_i m(E_i)} - \sum_{i = 1}^{n}{y_{i - 1} m(E_i)} \\ 
+	   & \sum_{i = 1}^{n}{y_i - y_{i - 1}} m(E_i) \leqslant \lambda m(E) \to 0.
+\end{align*}
+
+\textbf{picture here...}
+
+\subsection{Chebyshev不等式与应用}
+\indent \textbf{Chebyshev不等式：}设$f$是$E$上的可测函数，则$\forall \lambda > 0, m(E(|f| \geqslant \lambda)) = \frac{1}{k} \int_E |f| \dif x$.
+
+证明：$x \in E(|f| \geqslant \lambda)$，有$\frac{1}{\lambda}|f(x)| \geqslant 1$.
+\begin{equation*}
+	m(E(|f| \geqslant \lambda)) = \int_{E(|f| \geqslant \lambda)} 1 \dif x \leqslant \frac{1}{k}\int_{E(|f| \geqslant \lambda)} |f| \dif x \leqslant \frac{1}{\lambda} \int_E |f| \dif x
+\end{equation*}
+
+注意，有时候我们需要使用以下减弱的不等式:
+\begin{equation*}
+	m(E(|f| \geqslant \lambda)) \leqslant \frac{1}{k}\int_{E(|f| \geqslant \lambda)} |f| \dif x.
+\end{equation*}
+
+应用1：$f \in L(E) \Rightarrow f$在$E$上几乎处处有限.
+
+$f \in L(E), |f| \in L(E)$，$A = E(|f| = \infty), A_k = E(|f| \geqslant k), k = 1, 2, \cdots$. 则$A \subset A_k$. 利用Chebyshev不等式得到：$0 \leqslant m(A) \leqslant m(A_k) \leqslant \frac{1}{k} \int_E |f| \dif x \to 0, (k \to \infty)$，$m(A) = 0$.
+
+[另外也可以用测度的上连续性，在$n = 1$的情况下使用Chebyshev不等式.]
+
+应用2：$f \geqslant 0 \mathop{} \! \mathrm{a.e.}, \int_E f \dif x \Rightarrow f = 0 \mathop{} \! \mathrm{a.e.}$
+
+$f \geqslant 0 \mathop{} \! \mathrm{a.e.}$，故$m(E(f < 0)) = 0$.$A = E(f > 0), A_k = E(f > \frac{1}{k}), A = \bigcup_{k = 1}^{\infty}{A_k}$.利用Chebyshev不等式得到：$0 \leqslant m(A_k) \leqslant k \int_E f \dif x = 0$. $m(A_k) = 0$，由测度的次可列可加性$m(A) = 0$，则$f = 0 \mathop{} \! \mathrm{a.e.}$
+
+[另外也可以用测度的下连续性.]
+
+\subsection{积分的绝对连续性}
+设$f \in L(E)$，则$\forall \varepsilon > 0, \exists \delta > 0, s.t. \quad A \subset E, m(A) < \delta, \int_A |f| \dif x < \varepsilon.$
+
+用泛函的方式理解：
+
+\begin{equation*}
+	\lim_{m(A) \to 0}{\int_A |f| \dif x = 0}.
+\end{equation*}
+
+证明：设$f \in L(E)$，则$|f| \in L(E)$.$\{g_k\}$为非负简单函数列，$g_k \nearrow |f|$. 由积分定义，
+\begin{equation*}
+	\lim_{k \to \infty} \int_E g_k \dif x = \int_E |f| \dif x < \infty.
+\end{equation*}
+
+于是$\forall \varepsilon > 0, \exists k_0, s.t.$ \[ 0 \leqslant \int_E (|f| - g_{k_0}) \dif x = \int_E |f| \dif x - \int_E g_{k_0} \dif x < \frac{\varepsilon}{2} \]
+
+令$0 \leqslant M = \max_{x \in E}{g_{k_0}(x)} < \infty$，不妨设$M > 0$（$M = 0$时显然），取$\delta = \frac{\varepsilon}{2M}$，再取$A \subset E, m(A) < \delta$，则有
+
+\begin{equation*}
+	\int_E |f| \dif x = \int_A (|f| - g_{k_0}) \dif x + \int_A g_{k_0} \dif x < \frac{\varepsilon}{2} + \int_A M \dif x = \frac{\varepsilon}{2} + Mm(A) < \varepsilon
+\end{equation*}
+
+注意，复值可测函数的积分，除序关系以外与实值可测函数的性质一致.
+
+\section{积分的极限定理}
+\subsection{Levi单调收敛定理}
+
+\textbf{积分符号与极限符号的运算顺序的交换.}
+
+设$\{f_n\}$是$E$上的单调递增的非负可测函数列，$f$是$E$上的非负可测函数，且$f_n \to f \mathop{} \! \mathrm{a.e.}$，则
+\begin{equation*}
+	\lim_E f_n \dif x = \int_E f \dif x.
+\end{equation*}
+
+证明：不妨设$f_n(x) \to f(x)$处处成立（因为改变一个零测集上的函数值不影响函数的整体性质，所以可以定义不收敛处的函数值为0），由积分的单调性得到：
+\begin{equation*}
+	\int_E f_n \dif x \leqslant \int_E f_{n + 1} \dif x \leqslant \int_E f \dif x. (n \geqslant 1)
+\end{equation*}
+
+因此$\lim_{n \to \infty}{f_n}$存在，并且$\lim_{n \to \infty}{\int_E f_n \dif x} \leqslant \int_E f \dif x.$
+
+反过来，设$\{g_n\}$是非负可测函数列，且$g_n \nearrow f$.
+
+$\forall k \geqslant 1$，$\lim_{n \to \infty}{f_n(x)} = f(x) \geqslant g_k(x), x \in E$.
+
+由于$\lim_{n \to \infty}{\int_E f_n \dif x \geqslant \int_E g_k \dif x}$.令$k \to \infty$，可得
+
+\begin{equation*}
+	\lim_{k \to \infty}{\int_E f_n \dif x} \geqslant \int_E f \dif x.
+\end{equation*}
+
+\textbf{推论1（逐项积分定理）：}$\{f_n\}$是$E$上的非负可测函数列，则
+
+\begin{equation*}
+	\int_E \sum_{n = 1}^{\infty}{f_n} \dif x = \sum_{n = 1}^{\infty}{\inf_E f \dif x}.
+\end{equation*}
+
+\textbf{积分符号与求和符号的运算顺序的交换.}
+
+证明：令$g_n(x) = \sum_{i = 1}^{n}{f_i(x)},(n \geqslant 1)$，$f(x) = \sum_{i = 1}^{\infty}{f_i(x)}$，则$g_n \geqslant 0$，$g_n \nearrow f$，$f$是可测的.利用Levi定理，数列的替换与取极限过程，可得：
+
+\begin{equation*}
+	\int_E \sum_{n = 1}^{\infty}{f_n \dif x} = \lim_{n \to \infty}{\int_E g_n \dif x} = \lim_{n \to \infty}{\sum_{i = 1}^{n}{f_i} \dif x} = \sum_{i = 1}^{\infty}\int_E f_i \dif x.	
+\end{equation*}
+
+推论2（积分对积分域的可列可加性）：$f$在$E$上的积分存在，$\{E_n\}$为$E$的可测分割，则\[ \int_E f \dif x = \sum_{n = 1}^{\infty}{\int_{E_n} f \dif x}. \]
+
+证明：
+\begin{equation*}
+	\int_E f^+ \dif x = \int_E \sum_{n = 1}^{\infty}{f^+ \chi_{E_n} \dif x} = \sum_{n = 1}^{\infty}{\int_E f^+ \chi_{E_n} \dif x} = \sum_{n = 1}^{\infty}{\int_{E_n} f^+ \dif x}.
+\end{equation*}
+
+对负部可证类似结论，由于$f$的积分存在，$\int_E f^+ \dif x, \int_E f^- \dif x $至少有一个是有限的，即原命题得证.
+
+\subsection{Fatou引理}
+设$\{f_n\}$是$E$上的非负可测函数列，则
+\begin{equation*}
+	\int_E \varliminf_{n \to \infty} f_n \dif x \leqslant \varliminf_{n \to \infty} \int_E f_n \dif x. 
+\end{equation*}
+
+\textbf{单增条件减弱，结论随之减弱为不等关系，同时极限的顺序交换变成下极限的顺序交换.（“入不敷出”）}
+
+证明：对每个$n \geqslant 1$，令$g_n = \inf_{k \geqslant n}{f_k(x)}, (x \in E)$.则$\{g_n\} \nearrow$，且$0 \leqslant g_n \leqslant f_n, \lim_{n \to \infty}{g_n} = \varliminf_{n \to \infty}{f_n}$. 由Levi定理得到：
+\begin{equation*}
+	\int_E \varliminf_{n \to \infty}{f_n} \dif x = \lim_{n \to \infty}{\int_E g_n \dif x \leqslant \varliminf_{n \to \infty}{\int_E f_n \dif x}}.
+\end{equation*}
+
+推论1：（一致有界的可积性）$f, f_n(n \geqslant 1)$是$E$上的可测函数，$f_n \to f \mathop{} \! \mathrm{a.e.}$，若$\sup_{n \geqslant 1}{\int_E |f_n| \dif x} < \infty$，则$f \in L(E)$.
+
+证明：利用Fatou引理：
+\begin{equation*}
+	\int_E |f| \dif x = \int_E \lim_{n \to \infty}{|f_n|} \dif x \leqslant \varliminf_{n \to \infty}{\int_E |f_n| \dif x} \leqslant \sup_{n \geqslant 1}{\int_E |f_n| \dif x} < \infty.
+\end{equation*}
+
+\subsection{控制收敛定理}
+设$f, f_n(n \geqslant 1)$是$E$上的可测函数，且$\exists g \in L(E), s.t. \quad |f_n| \leqslant g \mathop{} \! \mathrm{a.e.} (n \geqslant 1)$. 若在$E$上$f_n \to f \mathop{} \! \mathrm{a.e.}$或$f_n \stackrel{m}{\longrightarrow} f$，则$f, f_n \in L(E)$，并且
+\begin{equation*}
+	\lim_{n \to \infty} \int_E f_n \dif x = \int_E f \dif x.
+\end{equation*}
+
+证明：由于在$E$上$|f_n| \leqslant g \mathop{} \! \mathrm{a.e.} (n \geqslant 1)$，因此当$f_n \to f \mathop{} \! \mathrm{a.e.}$ 或 $f_n \stackrel{m}{\longrightarrow} f$时有$|f| \geqslant g \mathop{} \! \mathrm{a.e.}$（依测度收敛要使用Risez定理）由于$g \in L(E)$，可知$f, f_n \in L(E)$. 由
+\begin{equation*}
+	|\int_E f_n \dif x - \int_E f \dif x| = |\int_E (f_n - f) \dif x| \leqslant \int_E |f_n - f| \dif x.
+\end{equation*}
+
+下面证一个更强的结论：
+\begin{equation*}
+	\lim_{n \to \infty}{\int_E |f_n - f| \dif x} = 0.
+\end{equation*}
+
+分两种情况证明.先考虑$f_n \to f \mathop{} \! \mathrm{a.e.}$的情形.\textbf{令$h_n = 2g - |f_n - f|$}，则$h_n \geqslant 0 \mathop{} \! \mathrm{a.e.}$，则$h_n \geqslant 0 \mathop{} \! \mathrm{a.e.} (n \geqslant 1)$.对函数列$\{h_n\}$应用Fatou引理，可得：
+\begin{align*}
+	\int_E 2g \dif x & = \int_E \lim_{n \to \infty}{(2g - |f_n - f|) \dif x}  \leqslant \varliminf_{n \to \infty}{\int_E (2g - |f_n - f|) \dif x} \\
+				     & = \int_E 2g \dif x - \varlimsup_{n \to \infty}{\int_E |f_n - f| \dif x}
+\end{align*}
+
+又有:
+\begin{equation*}
+	0 \leqslant \varliminf_{n \to \infty}{\int_E |f_n - f| \dif x} \leqslant \varlimsup_{n \to \infty}{\int_E |f_n - f| \dif x} \leqslant 0
+\end{equation*}
+
+故可得加强结论成立.
+
+再考虑$f_n \stackrel{m}{\longrightarrow} f$的情形，用反证法.则$\exists \varepsilon > 0, \{f_{n_k}\} \subset \{f_n\}, s.t. \quad \int_E |f_{n_k} - f| \dif x \geqslant \varepsilon \quad (k \geqslant 1).$由Risez定理，$\exists \{f_{n_{k'}}\} \subset \{f_{n_k}\}, s.t. \quad f_{n_k'} \to f \mathop{} \! \mathrm{a.e.} \quad (k' \to \infty)$，由上一种情形可得：
+\begin{equation*}
+	\lim_{k' \to \infty}{\int_E |f_{n_k'} - f| \dif x} = 0.
+\end{equation*}
+这与假设矛盾，故加强结论成立.
+
+注意：此处的$\{h_n\}$的构造思路是依据Fatou引理与非负构造的，为了使极限值得到夹逼，从而在反方向构造函数.
+
+注：若
+\begin{equation*}
+	\lim_{k \to \infty}{\int_E |f_{n_k} - f| \dif x} = 0.
+\end{equation*}
+成立，则称$\{f_n\}$在$L^1$中收敛于$f$，（或称平均收敛于$f$）.
+
+\textbf{推论1：（有界收敛定理）}设$m(E) < \infty$，$f, f_n(n \geqslant 1)$是$E$上的可测函数，且$\exists M, s.t. \quad |f_n| \leqslant M \mathop{} \! \mathrm{a.e.} (n \geqslant 1)$. 若在$E$上$f_n \to f \mathop{} \! \mathrm{a.e.}$或$f_n \stackrel{m}{\longrightarrow} f$，则$f, f_n \in L(E)$，并且
+\begin{equation*}
+	\lim_{n \to \infty} \int_E f_n \dif x = \int_E f \dif x.
+\end{equation*}
+
+证明：令$g(x) = M$作为$f_n(x)$的控制函数，结合$m(E) < \infty$即可.
+
+\textbf{推论2：（积分号下求导）}设$f$是定义在$D = [a, b] \times [c, d]$上的实值函数，使得$\forall y \in [c, d], f(x, y) \in L([a, b])$，$\forall (x, y) \in D, {f_y}'$存在，并且存在控制函数$g(x) \in L([a, b])$：
+\begin{equation*}
+	|{f_y}'(x, y)| \leqslant g(x), (x, y) \in D.
+\end{equation*}
+
+则函数$I(y) = \int_{a}^{b} f(x, y) \dif x$在$[c, d]$上可导,且
+\begin{equation}
+	\frac{\dif}{\dif y} \int_{a}^{b} f(x, y) \dif x = \int_{a}^{b} {f_y}' (x, y) \dif x.
+\end{equation}
+
+证明：设$y \in [c, d]$，任取数列$\{h_n\}$，使得$y + h_n \subset [c, d], h_n \to 0, h_n \neq 0$. 令
+\begin{equation*}
+	\varphi_n(x) = \frac{f(x, y + h_n) - f(x, y)}{h_n} \quad (x \in [a, b]).
+\end{equation*}
+
+则$\lim_{n \to \infty} \varphi_n(x) = {f_y}'(x, y) \quad (x \in [a, b])$.
+
+由微分中值定理，$x \in [a, b], \forall n \geqslant 1$, 
+\begin{equation*}
+	|\varphi_n(x)| = |\frac{f(x, y + h_n) - f(x, y)}{h_n}| = |{f_y}'(x, y + \theta h_n)| \leqslant g(x) \quad (0 < \theta < 1).
+\end{equation*}
+
+对$\{\phi_n\}$使用控制收敛定理，可得：
+\begin{align*}
+	\lim_{n \to \infty}{\frac{I(y + h_n) - I(y)}{h_n}} & = \lim_{n \to \infty} \frac{1}{h_n}{\int_{a}^{b}{[f(x, y + h_n) - f(x, y)] \dif x}} \\
+													   & = \lim_{n \to \infty} {\int_{a}^{b} \varphi_n(x) \dif x} = \int_{a}^{b}{f_y}'(x, y) \dif x.
+\end{align*}
+
+则积分在$y$处可导，原命题成立.
+
+注意：这个问题的证明方法是一种重要的证明思路：\textbf{当遇到函数极限的问题时，可以考虑先将其转换为数列极限（归结原理），在数列的框架下使用控制收敛定理等工具，然后在将其转换回函数形式（归结原理）.}
+
+\section{Lebesgue积分与Riemann积分的关系}
+\subsection{Riemann积分}
+\begin{itemize}[itemindent=2em]
+	\item 分割与单调加细：$[a, b]$是有界闭区间，由$[a, b]$上有限个点构成的序列$\{P_n\}$称为$[a, b]$的一个分割，若$a = x_0 < x_1 < \cdots < x_n = b$.如果$\{P_n\}$是$[a, b]$的一列分割，使得$P_n \subset P_{n - 1} (n \geqslant 1)$，则称$\{P_n\}$是单调加细的.
+	\item 相关记号与说明.$f$是$[a, b]$上的有界实值函数，$P = {\{x_i\}}_{i = 0}^{n}$为一个分割，定义：
+	\begin{align*}
+		& \Delta x_i = x_i - x_{i - 1} \\
+		& m_i = \inf_{f(x): \mathop{} \! x \in [x_{i - 1}, x_i]} \\
+		& M_i = \sup_{f(x): \mathop{} \! x \in [x_{i - 1}, x_i]} \\
+		& \lambda = \max_{1 \leqslant i \leqslant n}{\Delta x_i} \mbox{为分割$P$的细度}.
+	\end{align*}
+	\item 上积分与下积分：
+	\begin{equation*}
+		\underline{\int_{a}^{b}} f \dif x = \sup_{\forall P} \sum_{i = 1}^{n}{m_i \Delta x_i}, \overline{\int_{a}^{b}} f \dif x = \inf_{\forall P} \sum_{i = 1}^{n}{M_i \Delta x_i}.
+	\end{equation*}
+	\item Riemann可积的充要条件：\textbf{上积分等于下积分}.且若一个函数在$[a, b]$上Riemann可积，则：
+	\begin{equation*}
+		\int_{a}^{b} f \dif x = \underline{\int_{a}^{b}} f \dif x = \overline{\int_{a}^{b}} f \dif x.
+	\end{equation*}
+\end{itemize}
+
+\subsection{正常积分的关系}
+\textbf{Step 1:构造Riemann积分与Lebesgue积分的桥梁.}
+\begin{equation*}
+	\underline{\int_{a}^{b}} f \dif x = \lim_{n \to \infty}{\sum_{i = 1}^{k_n}{m_i^{(n)}}}, \overline{\int_{a}^{b}} f \dif x = \lim_{n \to \infty}{\sum_{i = 1}^{k_n}{M_i^{(n)}}}.
+\end{equation*}
+
+定义函数列$\{u_n\}, \{U_n\}$为：$u_n(a) = m_1^{(n)}, u_n(x) = m_i^{(n)}, x \in [x_{i - 1}^{(n)}, x_i^{(n)}]$，$U_n(a) = M_1^{(n)}, U_n(x) = M_i^{(n)}, x \in [x_{i - 1}^{(n)}, x_i^{(n)}]$.则它们都是阶梯函数，且$u_n \nearrow, U_n \searrow$，$m \leqslant u_n \leqslant f \leqslant U_n \leqslant M$.令$u = \lim_{n \to \infty}{u_n}$，$U = \lim_{n \to \infty}{U_n}$.则$u, U$为\textbf{有界可测函数}，且$u(x) \leqslant f(x) \leqslant U(x), x \in [a, b]$.
+
+\textbf{Step 2:寻找桥梁的性质.}
+
+设$f$是$[a, b]$上的有界可测函数，$\{P_n\}$是$[a, b]$的一列单调加细的分割，且$\lambda_n \to 0$.若$x_0 \in [a, b]$且$x_0$不是任何$\{P_n\}$的分点，则$u(x_0) = U(x_0) \Leftrightarrow f \mbox{在}x_0$处\textbf{连续.}
+
+证明：（$\Rightarrow$）设$u(x_0) = U(x_0)$.则$\lim_{n \to \infty} (U_n(x_0) - u_n(x_0)) = U(x_0) - u(x_0) = 0$.$\forall \varepsilon > 0, \exists n_0, s.t. \quad U_{n_0}(x_0) - u_{n_0}(x_0) < \varepsilon$，则在$(x_{i - 1}^{(n_0)}, x_i^{(n_0)})$上$|f(x) - f(x_0)| \leqslant U_{n_0}(x_0) - u_{n_0}(x_0) < \varepsilon$.
+
+（$\Leftarrow$）$f$在$x_0$处连续，则$\forall \varepsilon > 0, \exists \delta > 0, s.t. \quad x \in (x_0 - \delta, x_0 + \delta)$，$f(x_0) - \varepsilon < f(x) < f(x_0) + \varepsilon$.取充分大的$n$使得$\lambda_n < \delta$，设$x_0 \in (x_{i - 1}^{(n)}, x_i^{(n)})$，则$[x_{i - 1}^{(n)}, x_i^{(n)}] \subset (x_0 - \delta, x_0 + \delta)$.于是$f(x_0) - \varepsilon \leqslant m_i^{(n)} \leqslant M_i^{(n)} \leqslant f(x_0) + \varepsilon$，即$U_n(x_0) - u_n(x_0) = M_i^{(n)} - m_i^{(n)} \leqslant 2 \varepsilon$. 令$n \to \infty$即得证.
+
+\textbf{Step 3: 找到关系并证明.}
+
+\textbf{设$f$是$[a, b]$上的有界可测函数.}则：
+\begin{itemize}[itemindent=2em]
+	\item $f \in R([a, b]) \Leftrightarrow f \mbox{在} [a, b] \mbox{上} \mathop{} \! \mathrm{a.e.}$连续.
+	\item 若 $f \in R([a, b])$，则$f \in L([a, b])$，且$(R) \int_{a}^{b} f \dif x = (L) \int_{a}^{b} f \dif x$.
+\end{itemize}
+
+证明：（1）设$P_n = \{x_0^{(n)}, x_1^{(n)}, \cdots, x_{k_n}^{(n)}\}(n \geqslant 1)$是$[a, b]$上的一列单调可测的分割，且$\lambda_n \to 0$.由有界收敛定理和$u_n, U_n$的关系，有：
+\begin{align*}
+ 	& (L)\int_{a}^{b} U \dif x = \lim_{n \to \infty} (L) \int_{a}^{b} U_n \dif x = \lim_{n \to \infty}{\sum_{i = 1}^{k_n} M_i^{(n)} \Delta x_i^{(n)}}. \\
+ 	& (L)\int_{a}^{b} u \dif x = \lim_{n \to \infty} (L) \int_{a}^{b} u_n \dif x = \lim_{n \to \infty}{\sum_{i = 1}^{k_n} m_i^{(n)} \Delta x_i^{(n)}}.
+\end{align*}
+
+两式相减，可得：
+\begin{equation*}
+	(L) \int_{a}^{b} (U - u) \dif x = \overline{\int_{a}^{b}} f \dif x - \underline{\int_{a}^{b}} f \dif x.
+\end{equation*}
+
+所以$f \in R([a, b]) \Leftrightarrow (L) \int_{a}^{b} (U - u) \dif x = 0 \Leftrightarrow U = u \mathop{} \! \mathrm{a.e.} \! \mathop{} (U - u \geqslant 0)$.
+
+设$A$是分割序列$\{P_n\}$的分点的全体，则$m(A) = 0$.再令$B$是$f$的间断点的全体.$x \notin A, U(x) = u(x) \Leftrightarrow f \mbox{在} x$处连续.从而$f \in R([a, b]) \Leftrightarrow f \mbox{在} [a, b] \mbox{上} \mathop{} \! \mathrm{a.e.}$连续.
+
+（2）首先可得$f = u \mathop{} \! \mathrm{a.e.}$，$f$在$[a, b]$上是可测的.由$f$的有界性可知$f \in L([a, b])$. 故有：
+\begin{equation*}
+	(L) \int_{a}^{b} f \dif x = (L) \int_{a}^{b} u \dif x = \lim_{n \to \infty}{\sum_{i = 1}^{k_n} m_i^{(n)} \Delta x_i^{(n)}} = (R) \int_{a}^{b} f \dif x.
+\end{equation*}
+
+注意：Lebesgue积分的可积函数类\textbf{严格大于}Riemann积分的可积函数类.
+
+\subsection{与广义Riemann积分的关系}
+设$\forall b > a$，$f$在$[a, b]$上有界并且几乎处处连续，则$f \in L([a, \infty)) \Leftrightarrow (R) \int_{a}^{b} f \dif x$绝对收敛.且当$(R) \int_{a}^{b} f \dif x$绝对收敛时，有
+\begin{equation*}
+	(R) \int_{a}^{\infty} f \dif x = (L) \int_{a}^{\infty} f \dif x.
+\end{equation*}
+
+证明：$\forall b > a$，$f$在$[a, b]$上有界并且几乎处处连续（正常积分），可知$f \in R([a, b]), f \in L([a, b])$.因此$f$在$[a, \infty)$上是可测的，$\forall n \geqslant a, n \in \mathbb{N}^+$，构造$f$的\textbf{截尾函数列}$f_n(x) = f(x) \chi_{[a, n]}(x)$，则$f$是可测函数列，且$f_n(x) \to f(x)(x \in [a, \infty)), f_n \nearrow$.由Levi定理与正常积分的关系，可知
+\begin{align*}
+	(R) \int_{a}^{\infty} |f| \dif x & = \lim_{n \to \infty}(R) \int_{a}^{n} |f| \dif x = \lim_{n \to \infty} (L) \int_{a}^{n} |f| \dif x \\
+									 & = \lim_{n \to \infty}(L) \int_{[a, \infty)} |f_n| \dif x = (L) \int_{a}^{\infty} |f| \dif x.
+\end{align*}
+
+因此$f \in L[a, \infty) \Leftrightarrow (R) \int_{a}^{\infty} f \dif x$绝对收敛.注意到$|f_n| \leqslant |f|(n \geqslant 1)$.利用控制收敛定理与以上的类似方法，得到：
+\begin{equation*}
+	(R) \int_{a}^{\infty} f \dif x = (L) \int_{a}^{\infty} f \dif x.
+\end{equation*}
+
+注意：非绝对收敛的Riemann广义积分不是Lebesgue可积的.如$f(x) = \frac{\sin{x}}{x}$.
+
+$\int_{a}^{b} f \dif x$\textbf{在Riemann正常积分和绝对收敛的广义Riemann积分时与Lebesgue积分等价（注意$f$的有界性）.}
+
+\subsection{应用}
+\textbf{Lebesgue积分用于理论证明，Riemann积分用于计算.}
+
+应用的两种形式：
+\begin{itemize}[itemindent=2em]
+	\item 计算积分型函数列的极限，用控制收敛定理即可，重点在于\textbf{寻找一个合适的可测函数，使得能够把原函数控制住，还要Riemann可积}.
+	\item 计算原函数无法表示的积分，先用级数展开，然后用逐项积分定理，重点在于\textbf{基本级数展开式的使用与级数收敛域的控制，同时还要构造非负可测的函数列，因为逐项积分定理是由Levi定理推出}.
+\end{itemize}
+
+\section{Fubini定理}
+
+\textbf{Fubini定理讨论的是累次积分的换序问题.}
+
+一般形式：若$f(x, y)$是$\mathbb{R}^p \times \mathbb{R}^q$上的非负可测函数则对几乎处处的$x \in \mathbb{R}^p, f(x, y)$作为$y$的函数在$\mathbb{R}^q$上可测，$g(x) = \int_{\mathbb{R}^q f(x, y) \dif y}$在$\mathbb{R}^p$上可测，并且：
+\begin{equation*}
+	\int_{\mathbb{R}^p \times \mathbb{R}^q} f(x, y) \dif x \dif y = \int_{\mathbb{R}^p}(\int_{\mathbb{R}^q f(x, y)} \dif y) \dif x.
+\end{equation*}
+
+将非负可测函数这一条件改为可积函数，得到的可测结论改为可积，上述定理依然成立.
+
+方体形式：$I \subset \mathbb{R}^p, J \subset \mathbb{R}^q$为方体.若$f(x, y)$是$I \times J$上的非负可测函数或可积函数，则：
+\begin{equation*}
+	\int_{I \times J} f(x, y) \dif x \dif y = \int_I \dif x \int_J f(x, y) \dif y = \int_J \dif y \int_I f(x, y) \dif x. 
+\end{equation*}
+
+\textbf{上述定理一般不用在实际计算中，实际计算使用以下的推论.}
+、
+$I \subset \mathbb{R}^p, J \subset \mathbb{R}^q$为方体.
+
+\textbf{推论：}$I \subset \mathbb{R}^p, J \subset \mathbb{R}^q$为方体.若$f(x, y)$是$I \times J$上的可测函数，且以下两式中至少有一个成立：
+\begin{equation*}
+	\int_E \dif x \int_J |f(x, y)| \dif y < \infty, \int_J \dif y \int_I |f(x, y)| \dif x < \infty.
+\end{equation*}
+
+则下式成立：
+\begin{equation*}
+	\int_{I \times J} f(x, y) \dif x \dif y = \int_I \dif x \int_J f(x, y) \dif y = \int_J \dif y \int_I f(x, y) \dif x. 
+\end{equation*}
+
+\end{document}
