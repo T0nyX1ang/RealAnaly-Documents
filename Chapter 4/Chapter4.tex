@@ -275,10 +275,25 @@ bottom color=blue!50!black!20, % and something else at the bottom
 
 \begin{align*}
 	 0 & \leqslant \int_E f \dif x - \sum_{i = 1}^{n}{y_{i - 1}m(E_i)} \leqslant \sum_{i = 1}^{n}{y_i m(E_i)} - \sum_{i = 1}^{n}{y_{i - 1} m(E_i)} \\ 
-	   & \sum_{i = 1}^{n}{y_i - y_{i - 1}} m(E_i) \leqslant \lambda m(E) \to 0.
+	   & = \sum_{i = 1}^{n}{(y_i - y_{i - 1})} m(E_i) \leqslant \lambda m(E) \to 0.
 \end{align*}
 
-\textbf{picture here...}
+\begin{center}
+	\begin{tikzpicture}
+		\draw [-{Stealth[black]}, line width=1pt] (-1, 0) -- (10, 0);
+		\draw [-{Stealth[black]}, line width=1pt] (0, -1) -- (0, 5);
+		\draw [line width=1pt] (1, 1) .. controls (2, 3) and (3, 3) .. (4, 2) 
+									  .. controls (5, 1) and (6, 1) .. (8, 4);
+		\foreach \x in {1,...,9}
+			\draw (0, \x/2) -- (10, \x/2);
+
+		\foreach \y in {1,...,9}
+			\draw (\y, 0) -- (\y, 5);
+
+		\node[align=justify, below] at (5, 0) {Riemann积分的方向};
+		\node[align=justify, left] at (0, 2.5) {Lebesgue积分的方向};
+	\end{tikzpicture}
+\end{center}
 
 \subsection{Chebyshev不等式与应用}
 \indent \textbf{Chebyshev不等式：}设$f$是$E$上的可测函数，则$\forall \lambda > 0, m(E(|f| \geqslant \lambda)) = \frac{1}{k} \int_E |f| \dif x$.
@@ -595,7 +610,7 @@ $\int_{a}^{b} f \dif x$\textbf{在Riemann正常积分和绝对收敛的广义Rie
 \end{equation*}
 
 \textbf{上述定理一般不用在实际计算中，实际计算使用以下的推论.}
-、
+
 $I \subset \mathbb{R}^p, J \subset \mathbb{R}^q$为方体.
 
 \textbf{推论：}$I \subset \mathbb{R}^p, J \subset \mathbb{R}^q$为方体.若$f(x, y)$是$I \times J$上的可测函数，且以下两式中至少有一个成立：
@@ -607,5 +622,114 @@ $I \subset \mathbb{R}^p, J \subset \mathbb{R}^q$为方体.
 \begin{equation*}
 	\int_{I \times J} f(x, y) \dif x \dif y = \int_I \dif x \int_J f(x, y) \dif y = \int_J \dif y \int_I f(x, y) \dif x. 
 \end{equation*}
+
+\appendix
+\section{布置的课后作业}
+\indent $1,2,3,4,6,7,8,9,10,11,12,14,15,16,17,18,19,21,25,27,28,29,30,31,32,33,35.$
+
+\section{课后作业的讲解}
+1. $\sum_{i = 1}^{n}{\chi_{A_i}(x)} \geqslant q$，$\int_{0}^{1} \sum_{i = 1}^{n}{\chi_{A_i}(x)} \dif x \geqslant \int_{0}^{1} q \dif x$.
+
+3.$E = E(|f| \geqslant 2) \cup E(|f| \leqslant 2)$.分段处理.注意$\ln{3} > 1$.
+
+4.$E = E(|f| \geqslant \delta) \cup E(|f| \leqslant \delta)$.分段处理.$\delta$由$f'(0)$给出.
+
+6.$E(f > \frac{1}{k}) \nearrow$，有$E(f > 0) = \bigcup_{k = 1}^{\infty}{f \geqslant \frac{1}{k}}$.取测度后取极限可得：
+\begin{equation*}
+	\lim_{k = \infty} m(E(f \geqslant \frac{1}{k})) = m(\bigcup_{k = 1}^{\infty}{E(f \geqslant \frac{1}{k})}) = m(E) > 0.
+\end{equation*}
+
+于是可以得出极限的性质：
+\begin{equation*}
+	\exists k_0 \mathop{} \! \mathrm{s.t.} \! \mathop{} m(E(f \geqslant \frac{1}{k_0})) > 0.
+\end{equation*}
+
+最后再考察积分：
+\begin{equation*}
+	\int_E f \dif x \geqslant \int_{E(f \geqslant \frac{1}{k_0})} f \dif x \geqslant \int_{E(f \geqslant \frac{1}{k_0})} \frac{1}{k_0} \dif x > 0. 
+\end{equation*}
+
+7.即证$m(E(f \neq g)) = 0$.不妨设$f > g$.用第六题结论.
+
+9.利用积分的绝对连续性，注意组织$\varepsilon,\delta$的使用顺序，按极限定义证明即可.反方向使用放缩即可.
+
+11.构造函数，利用介值定理：
+\begin{equation*}
+	\varphi(x) = \int_{[a, x) \cap E} f \dif x (a \leqslant x < b).
+\end{equation*}
+
+12.先可将几乎处处有限设成处处有限的函数.然后记$A_n = m(n \leqslant |f| < n + 1)$，利用：
+\begin{equation*}
+	\sum_{n = 0}^{\infty}{(n + 1) m(A_n)} = \sum_{n = 0}^{\infty}{n m(A_n)} + m(E) < \infty.
+\end{equation*}
+\begin{equation*}
+	\sum_{n = 0}^{\infty}n m(A_n) \leqslant \sum_{n = 0}^{\infty}{\int_{A_n} |f| \dif x} = \int_E |f| \dif x < \infty.
+\end{equation*}
+
+14.令$f_n = f_{\chi_{E_n}} \geqslant 0 \nearrow$，则$f_n \to f (n \to \infty)$.用Levi定理.也可以用积分对积分域的可列可加性.
+
+15.类似第一题的方法：
+\begin{equation*}
+	\int_E \sum_{n = 1}^{\infty}{\chi_{A_n}(x)} \dif x = \sum_{n = 1}^{\infty}{\int_E \chi_{A_n}(x) \dif x} = \sum_{n = 1}^{\infty}{m(A_n)} < \infty.
+\end{equation*}
+
+16.\textbf{注意$\sum_{i = 1}^{\infty}{f_i(x)}$可能无定义，需要先证明它是有定义的.}令$g(x) = \sum_{n = 1}^{\infty}{|f_n(x)|} < \infty$.则有$\int_E g \dif x = \int_E \sum_{n = 1}^{\infty}{|f_n(x)|} \dif x = \sum_{n = 1}^{\infty}{\int_E |f_n| \dif x} < \infty$.则有$\sum_{n = 1}^{\infty}{|f_n(x)|}$a.e.收敛，即$\sum_{n = 1}^{\infty}{f_n(x)}$a.e.收敛.然后使用控制收敛定理.
+
+17.将下极限转化为子列，然后使用Risez定理与Fatou定理.
+
+18.将$g = f - f_n + |f - f_n|$作为控制函数，$0 \leqslant g \leqslant 2f$.证明$\lim_{n \to \infty}{\int_E |f - f_n| \dif x}$.
+
+19.$(\Rightarrow) f_n\stackrel{m}{\longrightarrow} 0 \Rightarrow \frac{|f_n|}{|f_n| + 1} \stackrel{m}{\longrightarrow} 0$.利用测度有限的条件与有限收敛定理.
+
+$(\Leftarrow)$ 利用$\varphi(x) = \frac{x}{1 + x}$的单调性，可得：
+\begin{equation*}
+	m(E(|f_n| \geqslant \varepsilon)) \leqslant m(E(\frac{|f_n|}{|f_n| + 1} \geqslant \frac{\varepsilon}{1 + \varepsilon})) \leqslant \frac{\varepsilon + 1}{\varepsilon} \int_E \frac{|f_n|}{|f_n| + 1} \dif x.
+\end{equation*}
+
+21.归结原理与Lebesgue控制收敛定理.控制函数取为：
+\begin{equation*}
+	g(x) = 
+	\begin{cases}
+		1 \quad x \in E(f \leqslant 1) \\
+		f(x) \quad x \in E(f > 1).
+	\end{cases}
+\end{equation*}
+
+25.$f(x)$在$[a, b]$上有界，设$|f(x)| \leqslant M, x \in [a, b]$.因为$g(x)$在$\mathbb{R}^1$上连续.故$g(u)$在$[-M, M]$上有界.设$|g(u)| \leqslant K, u \in [-M, M]$.则当$x \in [a, b], |g(f(x))| \leqslant K$.故$g(f(x))$在$[a, b]$上有界.然后使用Riemann可积的条件.
+
+27.利用积分的单调性与此处的非负性即可.（可以不用控制收敛定理）
+
+29.$f, g$在$[a, b]$上Riemann可积，故存在$[a, b]$的一个零测集$E_0$，使得$f, g \in C([a, b] - E_0)$.由于$f, g$在$[a, b]$的有理数集上相等，$\forall x \in [a, b] - E_0, \exists {x_n} \subset \mathbb{Q} \mathop{} \! s.t. \! \mathop{} x_n \to x$.于是$f(x) = \lim_{n \to \infty}{f(x_n)} = \lim_{n \to \infty}{g(x_n)} = g(x)$.
+
+30.控制函数为：（第一部分用到了均值不等式：$nx \leqslant \frac{1}{2}(1 + n^2 x^2)$）
+\begin{equation*}
+	g(x) = 
+	\begin{cases}
+		\frac{\sqrt{x}}{2x} \quad (x \leqslant 1) \\
+		\frac{\sqrt{x}}{x^2} \quad (x > 1).
+	\end{cases}
+\end{equation*}
+
+\section{一点闲谈}
+\indent 注意，以下内容仅代表本人观点。
+
+第四章是对Lebesgue积分的基本介绍，不涉及抽象测度空间的内容.
+
+有一些有趣的套路，来跟大家分享一下:
+\begin{itemize}[itemindent=2em]
+	\item 对于一般函数的证明有一个（非常花时间的）通法：即先说明非负简单函数，再说明非负可测函数，最后说明一般函数.
+	\item 将下极限转化为子列非常有用.
+	\item 关于控制函数的选择有一些比较好的方法：使用不等式放缩；构造分段函数，在不同的区间上分别控制.
+	\item 使用归结原理使得函数极限转为数列极限.然后使用相关定理.
+	\item 可以使用特征函数与Lebesgue积分来证明测度的一些问题.
+\end{itemize}
+
+还有一些需要注意的点：
+\begin{itemize}[itemindent=2em]
+	\item 注意\textbf{慎用}小于号，因尽量采用小于等于号.
+	\item 注意定理使用的条件，如Riemann可积的大条件中需要被积函数有界.
+	\item 注意使用一个公式时，需要验证这个公式是否已经定义.
+\end{itemize}
+
 
 \end{document}
