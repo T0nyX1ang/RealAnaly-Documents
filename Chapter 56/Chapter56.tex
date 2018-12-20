@@ -1,0 +1,549 @@
+\documentclass[bwprint, withoutpreface]{cumcmthesis}
+
+\usepackage{extarrows}
+\usepackage{authblk}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usetikzlibrary{intersections, calc, bending, decorations.markings, arrows, shapes, positioning, decorations.pathreplacing, shadows, arrows.meta}
+\newcommand*{\st}{\mathop{}\!\mathrm{s.t.}\!\mathop{}}
+\newcommand*{\aev}{\mathop{}\!\mathrm{a.e.}\!\mathop{}}
+\newcommand*{\dif}{\mathop{}\!\mathrm{d}}
+\newcommand*{\norm}[1]{\| #1 \|}
+\newcommand*{\nnorm}[2]{\| #1 \|_{#2}}
+\newcommand*{\sgn}[1]{\mathrm{sgn}\!\mathop{}#1}
+
+\title{泛函第一二章总结}
+
+\begin{document}
+\maketitle
+\noindent Author: Tony Xiang
+
+\noindent Full Document can be acquired here: 
+
+\noindent https://github.com/T0nyX1ang/RealAnaly-Documents/blob/master/Chapter\%2056/Chapter56.pdf
+
+\noindent Full Source code can be downloaded here:
+
+\noindent https://github.com/T0nyX1ang/RealAnaly-Documents/blob/master/Chapter\%2056/Chapter56.tex
+
+\section{距离空间的基本概念}
+标量域：$\mathbb{K}$，既可以表示实数域，也可以表示复数域.
+
+距离：$X \neq \emptyset, \forall x, y \in X, \exists d(x, y) \in \mathbb{R}^n, \st:$
+\begin{itemize}[itemindent=2em]
+	\item （正定性）$d(x, y) \geqslant 0, d(x, y) = 0 \iff x = y$；
+	\item （对称性）$d(x, y) = d(y, x)$；
+	\item （三角不等式）$d(x, y) \leqslant d(x, z) + d(z, y)$.
+\end{itemize}
+
+$(X, d)$称为距离空间.
+
+距离空间的例子：
+\begin{itemize}[itemindent=2em]
+	\item 欧式空间$\mathbb{K}^n$.可以定义很多距离.
+	\begin{align*}
+		d_1(x, y) & = (\sum_{i = 1}^{n}{|x_i - y_i|^2})^{\frac{1}{2}} \\
+		d_2(x, y) & = \sum_{i = 1}^{n}{|x_i - y_i|} \\
+		d_3(x, y) & = \max_{1 \leqslant i \leqslant n}{|x_i - y_i|}.
+	\end{align*}
+	\item \textbf{连续函数空间}$C[a, b]$.设$C[a, b]$是$[a, b]$上连续函数全体.$\forall x = x(t), y = y(t)$,\[d(x, y) = \max_{a \leqslant t \leqslant b}{|x(t) - y(t)|}\] 
+	\item 数列空间$s$.设$s$是实或复数列的全体.$\forall x = (x_i), y = (y_i)$,\[d(x, y) = \sum_{i = 1}^{\infty}{\frac{1}{2^i} \frac{|x_i - y_i|}{1 + |x_i - y_i|}}\]
+	（注：利用$\frac{|a + b|}{1 + |a + b|} \leqslant \frac{|a| + |b|}{1 + |a| + |b|} \leqslant \frac{|a|}{1 + |a|} + \frac{|b|}{1 + |b|}$证明三角不等式.）
+	\item 可测函数空间$M(E)$.$m(E) < \infty$，$M(E)$是$E$上可测函数的全体，将$\aev$相等的两个函数记为同一元.$\forall x = x(t), y = y(t)$,\[d(x, y) = \int_E \frac{|x(t) - y(t)|}{1 + |x(t) - y(t)|} \dif t\]
+	（注：利用$d(x, y) = 0 \iff x(t) = y(t) \aev$证明非负性.）
+	\item 离散距离空间.$X \neq \emptyset, \forall x, y \in X$,
+	\begin{equation*}
+		d(x, y) = 
+		\begin{cases}
+			0, \quad x = y \\
+			1, \quad x \neq y
+		\end{cases}
+	\end{equation*}
+	（注：这说明任意空间都可以定义距离，但是可能没有实际意义.）
+\end{itemize}
+
+距离空间上集合的距离：$X$是距离空间，$A, B \subset X, d(A, B) = \inf{d(x, y): x \in A, y \in B}$.
+
+有界集：$A \subset X, \exists x_0 \in X, M > 0, \st \forall x \in A, d(x, x_0) \leqslant M$.
+
+序列的极限：$\{x_n\}$是距离空间$X$的序列，$x \in X$，若$\lim_{n \to \infty}{d(x_n, x)} = 0$，则称$\{x_n\}$按距离收敛于$x$，记为$\lim_{n \to \infty}{x_n} = x$.
+
+注：不同空间中的序列在不同意义下的收敛，通过定义适当的距离，可以归结为距离空间中序列的按距离收敛.
+
+距离空间的性质（根据数学分析的思路证明）：
+\begin{itemize}[itemindent=2em]
+	\item 收敛序列的极限是唯一的；
+	\item 收敛序列是有界的；
+	\item 收敛序列的任一子列仍收敛于同一极限；
+	\item 距离函数是两个变元的连续函数，即$x_n \to x, y_n \to y, d(x_n, y_n) \to d(x, y)$.
+\end{itemize}
+
+（第四条性质的证明如下：$\forall x, y, z \in X, d(x, y) \leqslant d(x, z) + d(z, y)$，则$d(z, y) - d(x, y) \leqslant d(z, x) = d(x, z)$.因此$|d(x, y) - d(z, y)| \leqslant d(x, z)$.这是减法不等式，故有：$|d(x_n, y_n) - d(x, y)| \leqslant |d(x_n, y_n) - d(x, y_n)| + |d(x, y_n) - d(x, y)| \leqslant d(x_n, x) + d(y_n, y) \leqslant 0.$）
+
+\section{赋范空间的基本概念}
+线性空间：$X$是一个非空集，$\mathbb{K}^n$是标量域.$X$是线性空间，若
+\begin{itemize}[itemindent=2em]
+	\item $X$上加法满足交换律，结合律，存在唯一的零元，存在唯一的逆元（负元）.
+	\item $X$上数乘满足结合律，与加法共同满足左右交换率，且$1x = x$.
+\end{itemize}
+
+线性子空间：$E \subset X$，且$E$对$X$上的加法运算和数乘运算封闭，则$E$是$X$的线性子空间.
+
+线性相关，线性无关，线性空间的维数，（注意无穷维线性空间，线性无关向量组的个数可以任意大），线性空间的基与坐标.
+
+线性算子：$T:X \to Y, \forall x_1, x_2 \in X, \alpha, \beta \in \mathbb{K}, T(\alpha x_1 + \beta x_2) = \alpha T(x_1) + \beta T(x_2)$.
+
+由$E$张成的线性子空间：\[\mathrm{span}(E) = \{\sum_{i = 1}^{n}{\lambda_i x_i: x_1, x_2, \cdots, x_n \in E, \lambda_1, \lambda_2, \cdots, \lambda_n \in \mathbb{K}, n = 1, 2, \cdots}\}\].
+
+线性空间的（抽象）例子：
+\begin{itemize}[itemindent=2em]
+	\item 数列空间：$s$是实或复数列的全体.定义的加法为按坐标相加，数乘为按坐标数乘.
+	\item 函数空间：$X$是实或复函数的全体.$x, y \in X, \alpha \in \mathbb{K}$，$(x + y)(t) = x(t) + y(t), (\alpha x)(t) = \alpha x(t)$.
+\end{itemize}
+
+倍集与线性和集：$\lambda A = {\lambda x: x \in A}, A + B = {x + y:x \in A, y \in B}$.（集合可以为单点集）
+
+范数$\forall x \in X, \exists \|x\| \in \mathbb{R}$，满足：
+\begin{itemize}[itemindent=2em]
+	\item 正定性：$\|x\| \geqslant 0, \| x \| = 0 \iff x = 0$；
+	\item 绝对奇性：$\| \alpha x \| = |\alpha| \| x \|, x \in X, \alpha \in \mathbb{K}$；
+	\item 三角不等式：$\| x + y \| \leqslant \| x \| + \| y \|$.
+\end{itemize}
+
+此外还有：$|\norm{x} - \norm{y}| \leqslant \norm{x - y}$.
+
+由范数导出的距离：$d(x, y) = \norm{x - y}$.
+
+按范数收敛：$\norm{x_n - x} \to 0(n \to \infty)$，则称$\{x_n\}$按范数收敛于$x$.记号与按距离收敛一致.
+
+\textbf{距离可由范数导出的充要条件：}
+\begin{itemize}[itemindent=2em]
+	\item $d(\alpha x, 0) = |\alpha| d(x, 0)$；
+	\item $d(x + z, y + z) = d(x, y)$.
+\end{itemize}
+
+范数的连续性：
+\begin{itemize}[itemindent=2em]
+	\item （1）$\norm{x}$ 是$X$上的连续函数.即$x_n \to x, \norm{x_n} \to \norm{x}$；
+	\item （2）$X$上的加法与数乘运算是连续的.$\forall \{x_n\}, \{y_n\} \subset X, \{\alpha_n\} \subset \mathbb{K}, x_n \to x, y_n \to y, \alpha_n \to \alpha$，$x_n + y_n \in x + y, \alpha_n x_n \to \alpha x$.
+\end{itemize}
+
+（注：（1）由范数的减法不等式得到，（2）加法的连续性由范数的减法不等式得到，数乘的连续性先需要说明$\{\alpha_n\}$的有界性，然后将式子分解后利用减法不等式与范数的绝对奇性：$\norm{\alpha_n x_n - \alpha x} \leqslant |\alpha_n| \norm{x_n - x} + |\alpha_n - \alpha| \norm{x}$）
+
+赋范空间的例子：
+\begin{itemize}[itemindent=2em]
+	\item 欧式空间$\mathbb{K}^n$.可以定义很多范数.
+	\begin{align*}
+		\nnorm{x}{2} & = (\sum_{i = 1}^{n}{x_i})^\frac{1}{2} \\
+		\nnorm{x}{1} & = \sum_{i = 1}^{n}{x_i} \\
+		\nnorm{x}{\infty} & = \max_{1 \leqslant i \leqslant n}{|x_n|}
+	\end{align*}.
+	\item $C[a, b]$：\[\norm{x} = \max_{a \leqslant t \leqslant b}{|x(t)|}.\]
+	\item $c, c_0$，收敛的实或复数列的全体，$x = (x_1, x_2, \cdots) \in c$，\[\norm{x} = \sup_{i \geqslant 1}{|x_i|}.\] $c_0$是收敛于$0$的数列全体，范数定义与$c$上范数定义相同.
+	\item Lebesgue可积函数空间$L[a, b]$：将$\aev$相等的两个函数记为同一元.\[\nnorm{f}{1} = \int_{a}^{b}|f| \dif x.\]
+\end{itemize}
+
+赋范空间的线性子空间也是赋范空间.
+
+\section{$L^p$空间与$l^p$空间}
+\subsection{$L^p, 1 \leqslant p < \infty$}
+定义：$E$上的$p$次方可积函数的全体称为$L^p(E)$.
+
+由于$|f + g|^p \leqslant 2^p(|f|^p + |g|^p), (x \in E)$，$f \in L^p(E) \Rightarrow \alpha f \in L^p(E)$.$L^p(E)$是线性空间.
+
+范数：\[\nnorm{f}{p} = (\int_E |f|^p \dif x)^\frac{1}{p}.\]
+
+验证范数的合理性（良定义，此处只验证三角不等式）：
+
+Young不等式：$\forall a, b \geqslant 0, a, b \in \mathbb{R}, 1 < p, q < \infty, \frac{1}{p} + \frac{1}{q} = 1, ab \leqslant \frac{a^p}{p} + \frac{b^q}{q}$.
+
+（证明利用$\varphi(x) = \ln{x}$的上凸性质.$\lambda \ln{x} + (1 - \lambda)\ln{y} \leqslant \ln{\lambda x + (1 - \lambda) y}$，令$\lambda = \frac{1}{p}, x = a^p, y = b^p$）
+
+\textbf{Holder不等式}：$p, q$条件如上（共轭指标），$f \in L^p(E), g \in L^q(E)$, 则$fg \in L^1(E)$，且$\nnorm{fg}{1} \leqslant \nnorm{f}{p}\nnorm{g}{q}$.
+
+（证明使用：$a = \frac{|f(x)|}{\nnorm{f}{p}}, b = \frac{|g(x)|}{\nnorm{g}{q}}$，对Young不等式两边分别积分.注意存在范数为零的情况单独讨论.）
+
+Minkowski不等式（$L^p$空间范数的三角不等式）：$1 \leqslant \infty, f, g \in L^p(E)$，则$\nnorm{f + g}{p} \leqslant \nnorm{f}{p} + \nnorm{g}{p}$.
+
+（证明先拆出一个$|f + g|$，然后分解为$|f| + |g|$，对这些部分分别使用Holder不等式，合并即可.注意存在范数为零的情况，需要单独讨论.）
+
+按范数收敛：$f_n \stackrel{L^p}{\longrightarrow} f, (n \to \infty)$.\[\frac{1}{m(E)}\int_E |f_n - f|^p \dif x = \frac{1}{m(E)} \nnorm{f_n - f}{p}^p \to 0 (n \to \infty)\]
+
+按范数收敛能够推出按测度收敛.
+
+证明：$\nnorm{f_n - f}{p} \to 0$，则$\forall \varepsilon > 0, n \to \infty$，有
+\begin{align*}
+	m(E(|f_n - f| > \varepsilon)) & = m(E(|f_n - f|^p > \varepsilon^p)) \leqslant \frac{1}{\varepsilon^p} \int_{E} |f_n - f|^p \dif x \\
+								  & = \frac{1}{\varepsilon^p} \nnorm{f_n - f}{p} \to 0.
+\end{align*}
+
+由Risez定理可知，$f_n \stackrel{L^p}{\longrightarrow} f$，则$\exists \{f_{n_k}\} \subset \{f_n\}, \st f_{n_k} \to f \aev$
+
+\subsection{$L^{\infty}(E)$}
+本性有界：$\exists M > 0, \st |f| \leqslant M \aev \mbox{于}E$.
+
+范数：\[\nnorm{f}{\infty} = \inf\{M:|f| \leqslant M \aev\}.\]
+
+验证范数的合理性（良定义，此处只验证三角不等式）：
+
+$\forall n \geqslant 1, n \in \mathbb{N}, \exists E_n \subset E, m(E_n) = 0$，并且\[|f(x)| \leqslant \nnorm{f}{\infty} + \frac{1}{n} (x \in E \backslash E_n).\]
+
+令$E_0 = \bigcup_{n = 1}^{\infty}{E_n}$，则$m(E_0) = 0$，则$\forall n \geqslant 1, n \in \mathbb{N}, \exists E_n \subset E, m(E_0) = 0$，令$n \to \infty$得到$|f(x)| \leqslant \nnorm{f}{\infty}(x \in E \backslash E_0).$，则$|f| \leqslant \nnorm{f}{\infty} \aev$.
+
+$|f + g| \leqslant |f| + |g| \leqslant \nnorm{f}{\infty} + \nnorm{g}{\infty} \aev$，因此$\nnorm{f + g}{\infty} \leqslant \nnorm{f}{\infty} + \nnorm{g}{\infty}$.
+
+与$L^p$空间的关系：$m(E) < \infty$，则$\lim_{p \to \infty}\nnorm{f}{p} = \nnorm{f}{\infty}$.（证明略）
+
+Holder不等式在共轭指标$p = 1, q = \infty$或$p = \infty, q = 1$时均成立.（将无穷范数单独计算后提出积分式即可）
+
+\subsection{$l^p, 1 \leqslant p < \infty$}
+定义：$x = (x_n)$是实或复数列.若$\sum_{i = 1}^{\infty}{|x_n|^p} < \infty$，则称$x$是$p$次方可和的.$p$次方可和函数的全体称为$l^p$.
+
+范数：\[\nnorm{x}{p} = (\sum_{i = 1}^{\infty}{|x_n|^p)})^\frac{1}{p}\]
+
+同样有Holder不等式与Minkowski不等式，条件与结论与之前一致.按范数定义替代之即可.
+
+\subsection{$l^{\infty}$}
+定义：$l^{\infty}$是有界数列的全体.
+
+范数：$\forall x = (x_n) \in l^{\infty}$，\[\nnorm{x}{\infty} = \sup_{n \geqslant 1}{|x_n|}.\]
+
+Minkowski不等式在$0 < p < 1$上不成立.（实际上是反向）
+
+\section{点集，连续映射与可分性}
+内点，开集，内部，聚点，导集，闭集，闭包，开集的基本性质，导集的等价定义，闭包的等价定义，闭集的等价定义，稠密集，稠密集的等价定义.（注意邻域语言与序列语言的表达，这些定义在实变第一章第六节中均有提及），以下补充疏朗集的等价定义.
+
+\textbf{疏朗集的等价定义（TFAE）:}（$A \subset X$）
+\begin{itemize}[itemindent=2em]
+	\item $A$是疏朗集.
+	\item 对任一开球$U$，$\exists U_1 \subset U, \st U_1 \cap A = \emptyset$.
+	\item 对任一闭球$S$，$\exists S_1 \subset S, \st S_1 \cap A = \emptyset$.
+\end{itemize}
+
+（证明：$A$是疏朗集等价于对任一开球$U(x, \varepsilon)$，包含关系$U(x, \varepsilon) \subset \bar{A}$不成立，即存在$y \in U(x, \varepsilon), \st y \neq \bar{A}$，这又等价于$\exists U(y, \delta) \subset U(x, \varepsilon) \st U(y, \delta) \cap A = \emptyset$，由于每个开球中包含一个闭球，反之亦然，后两条性质等价.）
+
+映射，单射，满射，双射，像，原像.
+
+\textbf{连续映射}：$X, Y$是距离空间，$T:X \to Y, x_0 \in X, \forall \varepsilon > 0, \exists \delta > 0, \st d(x, x_0) < \delta, d(Tx, Tx_0) < \varepsilon$，则称$T$在点$x_0$处连续，若$T$在$X$上的每一点处连续，则称$T$在$X$上连续.
+
+邻域语言的等价描述：对于$Tx_0$的任一邻域$V$，存在$x_0$的邻域$U$，使得$T(U) \subset V$，则称$T$在$X$上连续.
+
+连续的充要条件：$X, Y$是距离空间，$T:X \to Y, x_0 \in X$，则$T$在$x_0$处连续的充要条件为：$\forall \{x_n\} \subset X, x_n \to x_0, Tx_n \to Tx_0$.（必要性：直接使用$\varepsilon-N$语言证明即可，充分性：用反证法，先用$\varepsilon-N$语言把条件写出来，然后根据$x_n \to x_0, Tx_n \nrightarrow Tx_0$推出矛盾）
+
+\textbf{连续映射的等价条件（TFAE）：}
+\begin{itemize}
+	\item $T$在$X$上连续.
+	\item $G \subset Y$，$G$为开集，$T^{-1}(G)$是$X$中的开集.
+	\item $F \subset Y$，$F$为闭集，$T^{-1}(F)$是$X$中的闭集.
+\end{itemize}
+
+证明：$(1) \Rightarrow (2).$设$G$是$Y$中的开集，不妨设$T^{-1}(G) \neq \emptyset$.$\forall x_0 \in T^{-1}(G)$，由于$Tx_0 \in G$，并且$G$是开集，因此存在$Tx_0$的一个邻域$V \subset G$，由$T$的连续性，$\exists U(x_0), \st T(U) \subset V \subset G$.于是$U \subset T^{-1}(G)$.因此$x_0$是$T^{-1}(G)$的内点，这表明$T^{-1}(G)$是开集.
+$(2) \Rightarrow (1)$.设$x_0 \in X$，$V$是$Tx_0$的一个邻域.由于$V$是$Y$中的开集，$T^{-1}(V)$是开集，$x_0 \in T^{-1}(V)$.$\exists U(x_0), \st T(U) \subset V $.则$T$在$x_0$处连续，由$x_0$的任意性得证.
+$(2) \Leftrightarrow (3)$.利用$\forall A \subset Y, T^{-1}(A^C) = {(T^{-1}(A))}^C$.
+
+空间的可分性：设$X$是距离空间，若在$X$中存在一个\textbf{可数的稠密子集}，则称$X$是可分的.
+
+\textbf{$l^p$是可分的}，$A = {(r_1, r_2, \cdots, r_n, 0, \cdots): r_i \in \mathbb{Q}, n = 1, 2, \cdots}$（可列集）.利用有理数在实数集中的稠密性与收敛数列的余项趋于0这两个性质，控制两个元之间的距离.
+
+\textbf{$C[a, b]$是可分的}，$P_0[a, b]$是有理系数多项式的全体（可列集），利用Weierstrass逼近定理，将$[a, b]$上的连续函数用多项式一致逼近，然后用有理系数多项式逼近普通的多项式，控制两个元之间的距离.
+
+\textbf{$L^p[a, b], 1 \leqslant p < \infty$是可分的}，$P_0[a, b]$是有理系数多项式的全体（可列集），首先用简单函数列逼近，然后使用控制收敛定理，用一个简单函数$g$逼近$x$，利用Lusin定理，用连续函数$h$逼近$g$，利用上一部分的结论，使用有理系数多项式$p_0$逼近$h$，控制两个元之间的距离.
+
+\textbf{$l^{\infty}$不是可分的}.令$K = {x = (x_1, x_2, \cdots): x_i = 0 \mbox{或} 1}$，则$K$是不可数集（二元数列），$\forall x, y \in K, d(x, y) = 1$.$A$是$l^{\infty}$的可数子集.若$A$在$l^{\infty}$中是稠密的，$U(x, \frac{1}{3})$中至少包含$A$中的一个元，由于开球$U(x, \frac{1}{3})$有不可数个，$\exists z \in A, z \in U(x, \frac{1}{3}) \cap U(y, \frac{1}{3})$，此时$d(x, y) \leqslant \frac{2}{3} \neq 1$，矛盾.
+
+可列集的意义：在可分的空间$X$中选取一个适当的可数的稠密子集，在这个集合上研究，然后取一个极限过程，得到全空间$X$上的相应结论.
+
+\section{完备性}
+Cauchy序列：$\{x_n\} \subset X, \forall (\mbox{给定的}) \varepsilon > 0, \exists N > 0, \st m, n > N, d(x_m, x_n) < \varepsilon$.
+
+Cauchy序列的性质：
+\begin{itemize}[itemindent=2em]
+	\item 收敛序列是Cauchy序列.
+	\item Cauchy序列是有界的.
+	\item $\{x_n\}$是Cauchy序列，并且存在一个子列$\{x_{n_k}\}$收敛于$x$，则$\{x_n\}$收敛于$x$.
+\end{itemize}
+
+完备空间：$X$是距离空间，若$X$中的每个Cauchy序列都是收敛的，则称$X$是完备的.完备的赋范空间称为Banach空间.
+
+$P[a, b]$不是完备的.$P[a, b] \subset C[a, b]$.令$p_n(t) = 1 + \frac{t}{1!} + \frac{t^2}{2!} + \cdots + \frac{t^n}{n!}, n = 1, 2, \cdots$，则$p_n \in P[a, b]$，又有$p_n \to e^t$.（利用Taylor展开），因此$\{p_n\}$是Cauchy序列，但$e^t \not\in P[a, b]$.这表明$\{p_n\}$在$P[a, b]$中不收敛.
+
+$l^p$是完备的.（仅证明$p \neq \infty$的部分，可以用作证明完备性的模板）
+
+设$x^{(n)} = (x_1^{(n)}, x_2^{(n)}, \cdots)$是$l^p$中，的Cauchy序列.则$\forall \varepsilon > 0, \exists N > 0, \st m, n > N$，\[\sum_{i = 0}^{\infty}{|x_i^{(m)} - x_i^{(n)}|^p} = \nnorm{x^{(m)} - x^{(n)}}{p}^p < \varepsilon^p.\]
+
+于是对每个\textbf{固定的}$i$，当$m, n > N$，\textbf{（$N$固定）}，\[|x_i^{(m)} - x_i^{(n)}| \leqslant \nnorm{x^{(m)} - x^{(n)}}{p} < \varepsilon. (*)\]
+
+这表明对每个\textbf{固定的}$i$，$\{x_i^{(n)}\}_{n \geqslant 1}$是Cauchy序列，因此$\{x_i^{n}\}$收敛，设当$n \to \infty$时，$x_i^{(n)} \to x_i, i = 1, 2, \cdots$，令$x = (x_1, x_2, \cdots)$.下面证明$x \in l^p$并且$x^{(n)} \to x$.（注：从按坐标收敛到按范数收敛）
+
+由$(*)$式得到，$\forall k \geqslant 1$，当$m, n > N$时，\[\sum_{i = 1}^{k}|x_i^{(m)} - x_i^{(n)}|^p < \varepsilon^p.\]
+
+\textbf{固定$N$}，先令$m \to \infty$，再令$k \to \infty$，得到\[\sum_{i = 1}^{\infty}{|x_i - x_i^{(n)}|^p} \leqslant \varepsilon^p.\]
+
+这表明，$x - x^{(n)} \in l^p$，由于$l^p$是线性空间，$x = (x - x^{(n)}) + x^{(n)} \in l^p$，且有$\nnorm{x - x^{(n)}}{p} \leqslant \varepsilon.$因此$x^{(n)} \to x, n \to \infty.$
+
+$c_0, c, l^{\infty}$均是完备的.
+
+$C[a, b]$是完备的.设$\{x_n\}$是$C[a, b]$中的Cauchy序列，则$\forall \varepsilon > 0, \exists N > 0, \st m, n > N, \norm{x_m - x_n} < \varepsilon$.于是$\forall t \in [a, b]$，当$m, n > N$时，\[|x_m(t) - x_n(t)| \leqslant \max_{a \leqslant t \leqslant b}{|x_m(t) - x_n(t)|} = \norm{x_m - x_n} < \varepsilon.\]
+
+这表明对每个\textbf{固定的}$t$，$\{x_n(t)\}_{n \geqslant 1}$是Cauchy序列.令$x(t) = \lim_{n \to \infty}{x_n(t)}, t \in [a, b]$.
+
+\textbf{固定$N$}，令$m \to \infty$.得到$|x(t) - x_n(t)| < \varepsilon$.则$x_n(t) \rightrightarrows x(t), x = x(t)$，且$\norm{x - x_n} = \max_{a \leqslant t \leqslant b}{|x(t) - x_n(t)| \leqslant \varepsilon}$，故$x_n \to x$.
+
+$L^p(E), (1 \leqslant p \leqslant \infty)$均是完备的.（证明略）
+
+纲集：$X$是距离空间，$A \subset X$，若$A$可以表示成为可数个疏朗集的并，则$A$是第一纲集，否则$A$是第二纲集.
+
+\textbf{完备空间的性质：}
+\begin{itemize}[itemindent=2em]
+	\item （闭球套定理）设$X$是完备的距离空间，$S_n = {x:d(x, x_n) \leqslant r_n}(n = 1, 2, \cdots)$是$X$中的一列闭球，满足$S_{n + 1} \subset S_n,n \geqslant 1$且$S_n$的半径$r_n \to 0$，则$\exists|x \in \bigcap_{n = 1}^{\infty}{S_n}$.（证明与数分类似，先证明$\{x_n\}$是Cauchy序列，利用完备性与闭集性质，唯一性可以设存在另一个点$x'$，证明$d(x, x') = 0$）
+	\item （Baire纲定理）完备的距离空间是第二纲集.（证明使用反证法，将$X$表示成为可数个疏朗集的并，$X = \bigcup_{n = 1}^{\infty}{A_n}$，根据疏朗集性质构造闭球套，由$X$的完备性，存在一个$x$属于这一些疏朗集的交，但是$S_n \cap A_n = \emptyset$，从而导致矛盾）
+\end{itemize}
+
+级数，部分和，绝对收敛.（了解即可）
+
+不动点：$X$是距离空间，$T:X \to X, \exists x_0 \in X, \st Tx_0 = x_0$，则称$x_0$为$T$的一个不动点.
+
+\textbf{压缩映射}：$X$是距离空间，$T:X \to X$，$\exists 0 \leqslant \lambda < 1, \st d(Tx, Ty) \leqslant \lambda d(x, y), x, y \in X$.称$T$是压缩的.
+
+压缩映射是连续的.
+
+\textbf{压缩映射原理：完备距离空间上的压缩映射存在唯一的不动点.}
+
+证明：任取$x_0 \in X$，令$x_1 = Tx_0, x_2 =Tx_1, \cdots, x_n = Tx_{n - 1}, \cdots$.
+
+$d(x_{n + 1}, x_n) = d(Tx_n, Tx_{n - 1}) \leqslant \lambda d(x_n, x_n - 1) \leqslant \cdots \leqslant \lambda^n d(x_1, x_0)$.于是$\forall n, p \in \mathbb{N}$，
+
+\begin{align*}
+	d(x_{n + p}, x_n) & \leqslant d(x_{n + p}, x_{n + p - 1}) + d(x_{n + p - 1}, x_{n + p - 2}) + \cdots + d(x_{n + 1}, x_n) \\
+					  & \leqslant (\lambda^{n + p - 1} + \lambda^{n + p - 2} + \cdots + \lambda^{n}) d(x_1, x_0) \\
+					  & = \lambda^n(\lambda^{p - 1} + \lambda^{p - 2} + \cdots + 1)d(x_1, x_0) \\
+					  & \leqslant \frac{\lambda^n}{1 - \lambda} d(Tx_0, x_0).
+\end{align*}
+
+则$\{x_n\}$是$X$中的Cauchy序列.由于$X$是完备的，$\{x_n\}$收敛，设$\lim_{n \to \infty}{x_n} = x$.由$T$的连续性得到$x = \lim_{n \to \infty}{x_n} = \lim_{n \to \infty}{Tx_{n - 1}} = Tx$.存在性得证.
+
+若另有$y \in X, \st Ty = y$，则$d(x, y) = d(Tx, Ty) \leqslant \lambda d(x, y) = 0.$唯一性得证.
+
+注：$x_0$经过$T$的$n$次迭代后与$x$的距离估计：$d(x, x_n) \leqslant \frac{\lambda^n}{1 - \lambda} d(Tx_0, x_0)$.
+
+注：压缩条件减弱至$d(Tx, Ty) < d(x, y)$时，若$X$是闭集，压缩映射原理仍成立，否则将不再成立.
+
+应用（微分方程中的Picard定理）：微分方程：
+\begin{equation*}
+	\frac{\dif x}{\dif y} = f(t, x), x(t_0) = x_0, f \in C(\mathbb{R}^2), \mbox{满足Lipschitz条件}.
+\end{equation*}
+则在$t_0$的某邻域内，微分方程有唯一的解.（在$C[a, b]$上考虑，将微分方程转化为积分方程，做出映射，并利用Lipschitz条件证明它是压缩的即可，注意要将$\norm{x_1 - x_2}$放缩出来）
+
+等距同构：$X, Y$是距离空间，若存在映射$T:X \to Y, \st T$是双射，并且对任意$x_1, x_2 \in X$，有$d(Tx_1, Tx_2) = d(x_1, x_2)$，则称$X, Y$是等距同构的.
+
+完备化空间：设$(X, d)$是距离空间，若存在完备的距离空间$(\tilde{X}, \tilde{d})$，使得$X$与$\tilde{X}$的一个稠密子空间等距同构，则称$\tilde{X}$是$X$的完备化空间.
+
+\textbf{若$\tilde{X}$是一个完备的距离空间，使得$X \subset \tilde{X}$，并且$X$在$\tilde{X}$中稠密，则$\tilde{X}$是$X$的完备化空间.}
+
+拓扑同构：存在$T:X \to Y$，使得$T$是双射和线性的，并且$\exists a, b > 0, \st a \norm{x} \leqslant \norm{Tx} \leqslant b \norm{x},x \in X$，则称$X, Y$是拓扑同构的.
+
+等距同构：存在$T:X \to Y$，使得$T$是双射和线性的，并且$\norm{Tx} = \norm{x}, x \in X$，则称$X, Y$是等距同构的.
+
+等距同构可以推出拓扑同构.
+
+范数的等价性：设$X$是线性空间，$\nnorm{\cdot}{1}, \nnorm{\cdot}{2}$是$X$上的两个范数，称$\nnorm{\cdot}{1}, \nnorm{\cdot}{2}$是等价的，若存在常数$a, b > 0, \st a \nnorm{x}{1} \leqslant \nnorm{x}{2} \leqslant b \nnorm{x}{1}, x \in X$.
+
+两个范数等价时，以它们为范数构成的赋范空间是拓扑同构的.
+
+设$(X, \norm{\cdot})$是$n$维赋范空间，$e_1, e_2, \cdots, e_n$是$X$的一组基，则存在常数$a, b > 0, \st \forall x = \sum_{i = 1}^{n}{x_i e_i}$，有
+\begin{equation*}
+	a(\sum_{i = 1}^{n}{|x_i|^2})^\frac{1}{2} \leqslant \norm{x} \leqslant b (\sum_{i = 1}^{n}{|x_i|^2})^\frac{1}{2}.
+\end{equation*}
+（证明略）
+
+有限维赋范空间的性质：
+\begin{itemize}[itemindent=2em]
+	\item 有限维赋范空间上的任意两个范数都是等价的.
+	\item 任意$n$维赋范空间与$\mathbb{K}^n$拓扑同构.
+	\item 有限维赋范空间是完备的，任何赋范空间的有限维子空间都是闭子空间.
+\end{itemize}
+
+证明：（1）利用范数的等价性.
+
+（2）取一组基，做映射$T:X \to K^{n}, T(\sum_{i = 1}^{n}{x_i e_i}) = (x_1, x_2, \cdots, x_n)$，在$a\norm{x} \leqslant \norm{Tx} b\norm{x}, x \in X$，由$\frac{1}{b}{\norm{x}} \leqslant \norm{Tx} = (\sum_{i = 1}^{n}{|x_i|^2})^\frac{1}{2} \leqslant \frac{1}{a}\norm{x}$.
+
+（3）由（2）可知$X$与$\mathbb{K}^n$拓扑同构，$\exists T:X \to \mathbb{K}^n, T$是双射与线性的，$\exists a, b > 0, \st a \norm{x} \leqslant \norm{Tx} \leqslant b \norm{x}, x \in X$，由$\{x_n\}$是Cauchy序列，$\forall m, n \in \mathbb{K}^n$，
+
+$\norm{Tx_m - Tx_n} = \norm{T(x_m - x_n)} \leqslant b \norm{x_m - x_n}$，$\{Tx_n\}$是Cauchy序列，$\exists y, Tx_n \to y$，$T$是满射，$\exists x \in X \st Tx = y$，于是$\norm{x_n - x} \leqslant \frac{1}{a} \norm{T(x_n - x)} = \frac{1}{a} \norm{Tx_n - y} \to 0, n \to \infty$，因此$x_n \to x.$这就证明$X$是完备的.
+
+\section{紧性}
+开覆盖：设$X$是距离空间，$A \subset X$.若$\{G_\alpha, \alpha \in I\}$是$X$中的一族开集，使得$\bigcup_{\alpha \in I}{G_{\alpha} \supset A}$，则称$\{G_{\alpha}$是$A$的一个开覆盖.
+
+\textbf{紧集：}对于$A$的任一开覆盖$\{G_{\alpha}, \alpha \in I\}$都存在其中的有限个开集仍覆盖$A$，则称$A$是紧集.（对应有限覆盖性质）
+
+\textbf{列紧集：}若$A$中任一序列都存在收敛的子列，则称$A$是列紧集.（序列性质）
+
+\textbf{完全有界集：}若对$\forall \varepsilon > 0, \exists \mbox{有限集} E = {x_1, x_2, \cdots, x_n}, \st \bigcup_{i = 1}^{k}U(x_i, \varepsilon) \supset A$，则称$A$是完全有界集，称$E$为$A$的有限$\varepsilon-$网.
+
+\textbf{完全有界集是有界集.}
+
+（取$\varepsilon = 1, \exists x_1, x_2, \cdots, x_k \in X, \st \bigcup_{i = 1}^{k}{U(x_i, 1) \supset A}$，$\forall x \in A, \exists 1 \leqslant i \leqslant k, \st x \in U(x_i, 1)$，于是$d(x, x_1) \leqslant d(x, x_i) + d(x_i, x_1) < 1 + \max_{1 \leqslant i \leqslant k}{d(x_i, x_1)}.$）
+
+\textbf{$A \subset X$，$A$是完全有界集的充要条件是$A$中的任一序列必存在Cauchy子列.}（完全有界集的序列语言，证明略）
+
+\textbf{列紧集是完全有界集；若$X$是完备的，则完全有界集是列紧集.}
+
+\textbf{$A \subset X$，$A$是紧集的充要条件是$A$中的任一序列必存在收敛于$A$中元的子列.}（紧集的序列语言，证明略）
+
+\textbf{紧集是列紧集.}
+
+\textbf{紧集是有界闭集.}（证明：$A$是紧集，则$A$是列紧集，则$A$是完全有界集，$A$是有界集.$\{x_n\}$是$A$中的序列$x_n \to x$，则$\exists {x_{n_k}} \subset {x_n}, \st x_{n_k} \to y$，而$x_n \to x$，则$x = y \in A$，这表明$A$是闭集.）
+
+\textbf{在有限维赋范空间中，有界集是列紧集，有界闭集是紧集.}
+
+证明：设$X$是$n$维赋范空间.$X$与$\mathbb{K}^n$拓扑同构，即存在$T:X \to \mathbb{K}^n, \st T$是双射和线性的，并且存在常数$a, b > 0, \st a \norm{x} \leqslant \norm{Tx} \leqslant b \norm{x}, x \in X$，设$A$是$X$中的有界集，$\norm{x} \leqslant M, x \in A$.设$\{x_n\} \subset A$，得到$\norm{Tx_n} \leqslant b \norm{x_n} \leqslant bM, n \leqslant 1$，则$\{Tx_n\}$是$\mathbb{K}^n$的有界序列，根据Weierstrass定理，$\exists \{Tx_{n_k}\} \subset \{Tx_n\}, y \in \mathbb{K}^n, \st \norm{Tx_{n_k} - y} \to 0$，设$x \in X, \st Tx = y.$得到$\norm{x_{n_k} - x} \leqslant \frac{1}{a} \norm{T(x_{n_k}- x)} = \frac{1}{a} \norm{Tx_{n_k} - y} \to 0, n \to \infty.$故$x_{n_k} \to x.$
+
+再设$A$是有界闭集，$A$是列紧集，故$A$是紧集.
+
+连续函数的性质：设$A$是距离空间$X$中的紧集，$f$是$A$上的连续的实值函数.则$f$在$A$上有界，且在$A$上达到上下确界.
+
+证明：有界性.若$f$在$A$上无上界，则$\forall n \in \mathbb{N}, \exists x_n \in A, \st f(x_n) > n$.由于$A$是紧集，$\exists \{x_{n_k}\} \subset {x_n}, \st x_{n_k} \to x \in A.$由于$f \in C(A), f(x_{n_k}) \to f(x).$但$f(x_{n_k}) > n_k \to \infty$，矛盾.有界性得证.记$a = \sup_{x \in A}{f(x)}$，则$\exists y_n \in A \st f(y_n) \to a$.由于$A$是紧集，$\exists \{y_{n_k}\} \subset y \in A$，又$f$的连续性得到$f(y) = \lim_{k \to \infty}{f(y_{n_k})} = a$.
+
+\section{有界线性算子的基本概念}
+线性算子，线性泛函.
+
+$T$是线性算子，则$N(T) = {x \in X: Tx = 0}$为$T$的零空间，$R(T) = {Tx: x \in X}$为$T$的值域.它们分别是$X, Y$的线性子空间.
+
+线性算子和线性泛函的例子：
+
+$X$是$n$维线性空间，$e_1, e_2, \cdots, e_n$是$X$的一组基，$A = (a_{ij})$是一个$n \times n$阶矩阵，定义算子：\[T:X \to X, T(\sum_{j = 1}^{n}{x_j e_j}) = \sum_{i = 1}^{n}{y_i e_i}, y_i = \sum_{j = 1}^{n}{a_{ij} x_j}, i = 1, 2, \cdots, n.\]
+
+则$T$是线性算子，反过来，设$T:X \to X$是线性算子，则$Te_j$必是$e_1,e_2,\cdots,e_n$的线性组合，设$Te_j = \sum_{i = 1}^{n}{a_{ij} e_i}, j = 1, 2, \cdots, n.$当$x = \sum_{j = 1}^{n}{x_j e_j}$时，
+\begin{align*}
+	y & = Tx = \sum_{i = 1}^{n}{y_j e_i} = \sum_{j = 1}^{n}{x_j T e_j} \\
+	  & = \sum_{j = 1}^{n}{x_j} \sum_{i = 1}^{n}{a_{ij}e_i} = \sum_{i = 1}^{n}{\sum_{j = 1}^{n}{a_{ij} x_j } e_i }
+\end{align*}
+
+则$X$上的线性算子与$n \times n$阶矩阵一一对应.
+
+定义泛函：\[f(x) = \sum_{i = 1}^{n}{a_i x_i}\]
+
+则$f$是$X$上的线性泛函，记$a_i = f(e_i)$，则\[f(x) = f(\sum_{i = 1}^{n}{x_i e_i}) = \sum_{i = 1}^{n}{x_i}{f(e_i)} = \sum_{i = 1}^{n}{a_i x_i}.\]
+
+则$X$上的线性泛函与$\mathbb{K}^n$中的向量一一对应.
+
+设$K(s, t)$是$[a, b] \times [a, b]$上的可测函数，满足$M = (\int_{a}^{b}(\int_{a}^{b}|K(s, t)|^2 \dif t) \dif s)^\frac{1}{2} < \infty$.对任意$x \in L^2[a, b]$，令
+\begin{align*}
+	(Tx) (s) & = \int_{a}^{b} K(s, t) x(t) \dif t \\
+	f(x)	 & = \int_{a}^{b} x(t) \dif t.
+\end{align*}
+
+分别为$L^2[a, b]$上的线性算子（第二类Fredholm积分算子）和线性泛函.由Holder不等式，
+\begin{align*}
+	\int_{a}^{b} |(Tx) (s)|^2 \dif s & = \int_{a}^{b}|\int_{a}^{b} K(s, t) x(t) \dif t|^2 \dif s \\
+									 & \leqslant \int_{a}^{b}(\int_{a}^{b}|K(s, t)|^2 \dif t \int_{a}^{b} |x(t)|^2 \dif t) \dif s \\
+									 & = \int_{a}^{b}(\int_{a}^{b}|K(s, t)|^2 \dif t) \dif s \int_{a}^{b} |x(t)|^2 \dif t \\
+									 & = M^2 \nnorm{x}{2}^2 < \infty.
+\end{align*}
+
+故$Tx \in L^2[a, b]$.由积分的线性性知道$T$是线性的.同样由Holder不等式，
+
+\begin{equation*}
+	\int_{a}^{b} |x(t)| \dif t \leqslant (\int_{a}^{b} 1 \dif t)^\frac{1}{2}(\int_{a}^{b}|x(t)|^2 \dif t)^\frac{1}{2} = \sqrt{b - a} \nnorm{x}{2}^2.
+\end{equation*}
+
+故$f$是$L^2[a, b]$上的线性泛函.
+
+算子的有界性：$X, Y$是赋范空间，$T:X \to Y$是线性算子，若$T$将$X$中的每个有界集都映射为$Y$中的有界集，则称$T$是有界的.
+
+\textbf{有界线性算子的等价定义（TFAE）:}
+\begin{itemize}[itemindent=2em]
+	\item （1）$T$是有界的；
+	\item （2）$\exists c > 0, \st \norm{Tx} \leqslant c \norm{x}, x \in X$；
+	\item （3）$T$在$X$上连续.
+\end{itemize}
+
+证明：$(1) \Rightarrow (2)$.由于$S = {x: \norm{x} \leqslant 1}$是$X$中的有界集，$T$是有界的，$T(S)$是$Y$中的有界集.$\exists c > 0, \st \forall x \in S, \norm{Tx} \leqslant c$,$\forall x \in X, x \neq 0, \frac{x}{\norm{x}} \in X$，故\[\frac{\norm{Tx}}{\norm{x}} = \norm{\frac{1}{\norm{x}} T x} = \norm{T(\frac{x}{\norm{x}})} \leqslant c\]
+
+因此$\norm{Tx} \leqslant c \norm{x}, x \in X$.
+
+$(2) \Rightarrow (3)$.设$\{x_n\} \subset X, x_n \to x$，由于$T$是线性的，因此$0 \leqslant \norm{Tx_n - Tx} = \norm{T(x_n - x)} \leqslant c \norm{x_n - x} \to 0.$因此$Tx_n \to Tx$.连续性得证.
+
+$(3) \Rightarrow (1)$.若$T$不是有界的，则存在$X$中的有界集$A$，使得$T(A)$不是有界的.$\exists M > 0, \{x_n\} \subset A, \st \norm{x_n} \leqslant M, n \geqslant 1$，但是$\norm{Tx_n} > n$，\textbf{令}$x_n' = \frac{x_n}{\sqrt{n}}, n \geqslant 1$，则$x_n' \to 0$，则$x_n' \to 0$.由于$T$连续，应有$Tx_n' \to T(0) = 0$，但是
+\begin{equation*}
+	\norm{Tx_n'} = \norm{T(\frac{x_n}{\sqrt{n}})} = \frac{\norm{Tx_n}}{\sqrt{n}} \geqslant \sqrt{n} \to \infty.
+\end{equation*}
+矛盾，因此$T$有界.
+
+\textbf{有界性通常可以由Holder不等式放缩得到.}
+
+第二型Fredholm积分算子，\textbf{有限维}赋范空间上的算子是有界的.
+
+无界的线性算子的例子：$C^{(1)}[0, 1]$上的微分算子$D: C^{(1)}[0, 1] \to C[0, 1], (Dx)(t) = x'(t)$.取$x_n(t) = t^n, n = 1, 2, \cdots$，则$\forall n, x_n \in C^{(1)}[0, 1], \norm{x_n} = 1, \norm{Dx_n} = \max_{0 \leqslant t \leqslant 1}{nt^{n - 1}} = n, n = 1, 2, \cdots$
+
+\textbf{算子范数：}$X, Y$是赋范空间，$T:X \to Y$是有界线性算子，算子范数为：\[\norm{T} = \sup_{\norm{x} \leqslant 1}{\norm{Tx}}.\]
+
+$f$是$X$上的有界线性泛函，范数为：\[\norm{f} = \sup_{\norm{x} \leqslant 1}{|f(x)|}.\]
+
+算子范数的等价定义：$\norm{T} = \sup_{x \neq 0}{\frac{\norm{Tx}}{\norm{x}}} = \sup_{\norm{x} = 1}{\norm{Tx}}$.
+
+证明：
+\begin{align*}
+	\sup_{\norm{x} \leqslant 1}{\norm{Tx}} & \leqslant \sup_{\norm{x} \leqslant 1, x \neq 0}{\frac{\norm{Tx}}{\norm{x}}} \leqslant \sup_{x \neq 0}{\frac{\norm{Tx}}{\norm{x}}} \\
+				         				   & = \sup_{x \neq 0}{\norm{T(\frac{x}{\norm{x}})}} = \sup_{\norm{x} = 1}{\norm{Tx}} \leqslant \sup_{\norm{x} \leqslant 1}{\norm{Tx}}
+\end{align*}
+
+范数的性质：$\norm{Tx} \leqslant \norm{T} \norm{X}, x \in X$.同时，若$c > 0, \st \norm{Tx} \leqslant c \norm{X}$，则有$\norm{T} \leqslant c$.
+
+符号函数：$x \in \mathbb{K}^1$，则
+\begin{equation*}
+	\sgn{x} = 
+	\begin{cases}
+		\frac{\bar{x}}{|x|}, x \neq 0 \\
+		0, x = 0.
+	\end{cases}
+\end{equation*}
+
+符号函数的性质：$x \sgn{x} = |x|, |\sgn{x}| \leqslant 1$.
+
+\textbf{算子范数的计算：（两个方向放缩）}
+
+设数列$a = (a_i) \in l^1$，$f(x) = \sum_{i = 1}^{\infty}{a_i x_i}, x \in l^{\infty}$为定义在$l^{\infty}$上的泛函.
+
+显然$f$是\textbf{线性的}.$\forall x = (x_i) \in l^{\infty}$，有
+\begin{equation*}
+	|f(x)| \leqslant \sum_{i = 1}^{\infty}{|a_i x_i|} \leqslant |a_i| \sup_{i \geqslant 1}|x_i| = \nnorm{a}{1} \nnorm{x}{\infty}.
+\end{equation*}
+
+\textbf{这表明$f$有界，且$\norm{f} \leqslant \nnorm{a}{1}$}，另一方面，令$x^{(0)} = (\sgn{a_1}, \sgn{a_2}, \cdots) \in l^{\infty}$，并且$\nnorm{x^{(0)}}{\infty} \leqslant 1$.由于
+\begin{equation*}
+	|f(x^{0})| = |\sum_{i = 1}^{\infty}{a_i x_i^{(0)}}| = |\sum_{i = 1}^{\infty}{a_i \sgn{a_i}}| = \sum_{i = 1}^{\infty}{|a_i|} = \nnorm{a}{1}.
+\end{equation*}
+
+因此$\norm{f} \geqslant \nnorm{a}{1}$，综上所述$\norm{f} = \nnorm{a}{1}$.
+
+若$f$视作$c_0$上的泛函，正向不等式与上述证明一致，反向不等式：$\forall \varepsilon > 0, \exists k \in \mathbb{N}, \st \sum_{i = 1}^{k}{a_i} > \nnorm{a}{1} - \varepsilon$，取$x^{(0)} = (\sgn{a_1}, \sgn{a_2}, \cdots, \sgn{a_k}, 0, \cdots) \in c_0$，并且$\nnorm{x^{(0)}}{\infty} \leqslant 1$.由于
+\begin{equation*}
+	|f(x^{0})| = |\sum_{i = 1}^{\infty}{a_i x_i^{(0)}}| = |\sum_{i = 1}^{\infty}{a_i \sgn{a_i}}| = \sum_{i = 1}^{\infty}{|a_i|} = \nnorm{a}{1} - \varepsilon.
+\end{equation*}
+
+由$\varepsilon > 0$的任意性，$\norm{f} \geqslant \nnorm{a}{1}$，综上所述$\norm{f} = \nnorm{a}{1}$.
+
+有界线性算子的空间：用$B(X, Y)$表示从$X$到$Y$的有界线性算子的全体.$\forall A, B \in B(X, Y), \alpha \in \mathbb{K}$，定义：
+\begin{equation*}
+	(A + B)x = Ax + Bx, (\alpha A)x = \alpha A x, x \in X.
+\end{equation*}
+
+又$\norm{(A + B)x} = \norm{Ax + Bx} \leqslant \norm{Ax} + \norm{Bx} \leqslant (\norm{A} + \norm{B})\norm{X}$，因此$A + B$是有界的，且有$\norm{A + B} \leqslant \norm{A} + \norm{B}$.
+
+验证该范数是良定义的：
+\begin{itemize}[itemindent=2em]
+	\item $\norm \leqslant 0$，并且$A = 0 \Rightarrow \norm{A} = 0$，若$\norm{A} = 0$，则$Ax = 0, x \in X$（算子范数的不等式），则$A = 0$.
+	\item $\forall \alpha \in \mathbb{K}$，$\norm{\alpha A} = \sup_{\norm{x} \leqslant 1}{\norm{(\alpha A) x}} = \sup_{\norm{x} \leqslant 1}{|\alpha| \norm{Ax}} = \alpha \norm{A}$.
+	\item $\norm{A + B} \leqslant \norm{A} + \norm{B}$由之前的式子可得.
+\end{itemize}
+
+若$Y$是Banach空间，则$B(X, Y)$是Banach空间.
+
+证明：设$\{T_n\}$是$B(X, Y)$中的Cauchy序列，则$\forall \varepsilon > 0, \exists N, \st m, n > N, \norm{T_m - T_n} < \varepsilon$.于是$\forall x \in X, m, n > N$，\[\norm{T_m x - T_n x} = \norm{(T_m - T_n)x} \leqslant \norm{T_m - T_n} \norm{x} < \varepsilon \norm{x}.\]
+
+这表明$\{T x_n\}$是$Y$中的Cauchy序列，由于$Y$是完备的，$\{T_n x\}$收敛，$\forall x \in X$，令$Tx = \lim_{n \to \infty}{T_n x}$，则$T$是$X$到$Y$的线性算子，固定$n > N$，令$m \to \infty$，得到$\norm{(T - T_n)x} = \norm{Tx - T_n x} \leqslant \varepsilon \norm{x}, x \in X$.
+
+上式表明$T - T_n \in B(X, Y)$.由于$B(X, Y)$是线性空间，$T = (T - T_n) + T_n \in B(X, Y)$，且$\norm{T - T_n} \leqslant \varepsilon.$故$B(X, Y)$是完备的.
+
+\end{document}
