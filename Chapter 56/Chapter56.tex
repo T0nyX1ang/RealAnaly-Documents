@@ -546,4 +546,80 @@ $f$是$X$上的有界线性泛函，范数为：\[\norm{f} = \sup_{\norm{x} \leq
 
 上式表明$T - T_n \in B(X, Y)$.由于$B(X, Y)$是线性空间，$T = (T - T_n) + T_n \in B(X, Y)$，且$\norm{T - T_n} \leqslant \varepsilon.$故$B(X, Y)$是完备的.
 
+\appendix
+\section{布置的课后作业}
+第一章：$1,2,3,4,6,9,13,14,16,18,19,22,23,24,29,31,32,33,35,39,41,42,43.$
+
+第二章：$1,2,4,5,6.$
+
+\section{课后作业的讲解}
+\noindent 第一章：
+
+2.（$\Rightarrow$）即$\lim_{n \to \infty}{d(x^{(n)}, x)} = 0 \iff \lim_{n \to \infty}{\sum_{i = 1}^{\infty}\frac{1}{2^i}\frac{|x_i^{(n)} - x_i|}{1 + |x_i^{(n)} - x_i|}} = 0$.利用$\varphi(t) = \frac{t}{1 + t}$的单增与$\varepsilon - N$语言即可证明.
+
+（$\Leftarrow$）将待求式分为两部分，一部分由于级数的性质能够取得很小，另一部分由于按坐标收敛的性质能够取得很小.即：
+\begin{equation*}
+	d(x^{(n)}, x) = \sum_{i = 1}^{m}{\frac{1}{2^i}\frac{|x_i^{(n)} - x_i|}{1 + |x_i^{(n)} - x_i|}} + \sum_{i = m + 1}^{\infty}{\frac{1}{2^i}\frac{|x_i^{(n)} - x_i|}{1 + |x_i^{(n)} - x_i|}}
+\end{equation*}
+
+4.（1）$\frac{1}{p} + \frac{1}{q} = \frac{1}{r} \iff \frac{1}{\frac{p}{r}} + \frac{1}{\frac{q}{r}} = 1$，用Holder不等式.（2）设$\frac{1}{p} + \frac{1}{q} = \frac{1}{t}$，则$\frac{1}{t} + \frac{1}{r} = \frac{1}{1}$，利用（1）与Holder不等式.
+
+6.（1）将级数分成两部分，对$|x_n| < 1$的部分（由足够大的$N$取得），将$|x_n|^p_2$放缩成$|x_n|^p_1$.其余部分是有限求和，不需要放缩.（2）将函数分成两部分：$|f| \leqslant 1$和$|f| > 1$，后一部分放缩为$L^{p_1}$空间的积分，前一部分直接放缩为$m(E)$.
+
+9.注意要对$p$分情况讨论，但基本思想都是将依测度收敛转化为依坐标收敛，然后用极限的保号性.
+
+13.证明$\bar{E}$对加法和数乘运算封闭.
+
+16.令$G_n = \bigcup_{x \in F}{U(x, \frac{1}{n})}$.则$G_n$是开集.$\forall x \in F, x \in G_n, F \subset G_n, F \subset \bigcap_{n = 1}^{\infty}{G_n}$.$\forall x \not\in F, d(x, F) = \delta > 0$，取$N > 0 \st \frac{1}{N} < \delta$，则$x \not\in G_N$（否则$\exists y \in F, \st d(x, F) \leqslant d(x, y) \leqslant \frac{1}{N} < d(x, F)$），故$F = \bigcap_{n = 1}^{\infty}{G_n}$.
+
+18.$y \in Y$，由于$T$是满射，$\exists x \in X, \st Tx = y$.由于$A$在$X$中稠密，$\exists \{x_n\} \subset A, x_n \to x$，由于$T$连续，$y_n = T_{x_n} \to T_x = y$.这就证明了$T(A)$在$Y$中稠密.
+
+19.（$c$）令$A = \{(r_1, r_2, \cdots, r_n, r, r, \cdots): r_i, r \in \mathbb{Q}\}$.$x = (x_i) \in c, \lim_{n \to \infty}{x_i} = a.$，取有理数分别逼近$x_i, a$即可.
+
+22.（1）设$A$是完备子集，设${x_n} \subset A, x_n \to x$，因而是Cauchy序列，故存在$y \in A, \st x_n \to y$，已知$x_n \to x$，由极限唯一性$x = y \in A$.（2）设$X$是完备的，$\{x^{(n)}\}$是$A$中的Cauchy序列，由于$X$完备，$\exists \{x_n\} \subset A, \st x_n \to x \in A$，则$A$是完备的.
+
+23.（$c_0$）依坐标收敛部分可以仿照书上完成，另一部分需要先通过固定$i$，得到$|x_i^{(m)} - x_i^{(n)}| < \varepsilon$，然后固定$n > N$，取$m \to \infty$，得到$\sup{x - x_i^{(n)}} \leqslant \varepsilon$.最后对固定的$x^{(n)} < c_0$，$\exists N_1, \st \forall i > N_1, |x_i^{(n)}| < \varepsilon$.证明$x \in c_0, x^{(n)} \to x$即可.
+
+29.令$f(x) = d(x, Tx), x \in \mathbb{K}$.则可以使用距离函数的连续性得到$f$的连续性.设$f(x_0) = \min_{x \in K}{f(x)}, Tx_0 \neq x_0$，则$f(Tx_0) = d(Tx_0, T(Tx_0)) < d(x_0, Tx_0) = f(x_0)$，与$f(x_0)$的最小性矛盾.反例可以使用$Tx = x + \frac{1}{x}, x \in [1, \infty)$.
+
+31.令$T:C[a, b] \to C[a, b], (Tx)(t) = \lambda \int_{a}^{b} K(s, t) x(s) \dif s + \varphi(t)$.证明它是压缩的.
+
+32.令$T:L^2[a, b] \to L^2[a, b], (Tx)(t) = \int_{a}^{b} K(s, t) x(s) \dif s + a(t)$，利用Holder不等式证明它是压缩的.
+
+33.令$x^{(n)} = (1, \frac{1}{2}, \cdots, \frac{1}{n}, 0, 0, \cdots) \in c_{00}, x = (1, \frac{1}{2}, \cdots)$，则$x^{(n)} \to x \not\in c_{00}$.不完备性得证.完备化空间为$c_0$，设$x = (x_i) \in c_0, \forall \varepsilon > 0$，由于$\lim_{i \to \infty}{x_i} = 0, \exists N, \st i > N, |x_n| < \frac{\varepsilon}{2}$.令$y = (x_1, x_2, \cdots, x_N, 0, 0, \cdots)$，则$\norm{x - y} = \sup_{i \geqslant 1}{|x_i - y_i|} = \sup_{i \geqslant N}{|x_i|} \leqslant \frac{\varepsilon}{2} < \varepsilon$.即$y \in U(x, \varepsilon)$.即$c_{00}$在$c_0$中稠密.
+
+35.$\nnorm{f}{2}, \nnorm{f}{3}$等价.$\int_{0}^{1}{|f(x)|^2 \dif x} \leqslant \int_{0}^{1}{(1 + x)|f(x)|^2 \dif x} \leqslant \int_{0}^{1}{2|f(x)|^2 \dif x}$，开根号即可.
+
+$\nnorm{f}{2}, \nnorm{f}{1}$不等价.取$f_n(t) = n \chi_{[0, \frac{1}{n}]} (t)$.则$\nnorm{f}{1} = 1, \nnorm{f}{2} = n$.不存在$c, \st \nnorm{f}{2} \leqslant c\nnorm{f}{1}.$
+
+39.取$T(A)$中任一序列$\{y_n\}$.则$\exists \{x_n\} \subset A, \st Tx_n = y_n$.由于$A$是紧集，$\exists \{x_{n_k}\} \subset \{x_n\}, \st x_{n_k} \to x \in A$.由于$T$连续，$Tx_{n_k} \to Tx \in T(A)$.$T(A)$是紧集.
+
+41.$\{x_n\}$是$X$中的一个Cauchy序列，其子序列为Cauchy序列，故$A$为$X$中的完全有界集，则$A$是列紧集.故$\exists \{x_{n_k}\} \subset {x_n}, x_{n_k} \to x$，由于$\{x_n\}$是Cauchy序列，$x_n \to x \in X, n \to \infty.$则$X$是完备的.
+
+42.$\{z_n\} \subset A + B, z_n \to z.$，可设$z_n = a_n + b_n, a_n \in A, b_n \in B$.由于$A$是紧集，$\exists \{a_{n_k}\} \subset \{a_n\}, a_{n_k} \to a \in A$，由闭集的性质$b_{n_k} = z_{n_k} - a_{n_k} \to (z - a) \in B. z = (z - a) + a \in A + B$.
+
+43.（1）假设$d(A, B) = 0$，$d(A, B) = \inf\{d(x, y): x \in A, y \in B\}, d(x_n, y_n) < \frac{1}{n}. \exists \{x_n\} \in A, \{y_n\} \in B, \st \lim_{n \to \infty}{d(x_n, y_n)} = 0$.$A$是紧集，$\exists \{x_{n_k}\} \subset \{x_n\}, x_{n_k} \to x_n \in A, d(y_{n_k}, x) \leqslant d(y_{n_k}, x_{n_k}) + d(x_{n_k}, x) \to 0$，则$\lim_{n \to \infty}{y_{n_k}}$，$B$为闭集，$x \in B, x \in A \cap B \neq \emptyset$.矛盾.（2）取$y = 0; y = \frac{1}{x}, x > 0.$
+
+\noindent 第二章：
+
+2.（$\Rightarrow$）$T$有界，假设$A \subset X$是完全有界集，设$\{y_n\}$是$T(A)$中的序列，则$\exists \{x_n\} \subset T(A), Tx_n = y_n$.则$\{x_n\} \subset A, \exists$Cauchy子列$\{x_{n_k}\}$，$\norm{Tx_{n_{k_1}} - Tx_{n_{k_2}}} = \norm{T(x_{n_{k_1}} - Tx_{n_{k_2}})} \leqslant c \norm{x_{n_{k_1} - x_{n_{k_2}}}}$.所以$\{Tx_{n_k}\}$为Cauchy序列，即$\{y_n\}$为$\{Ty_n\}$的Cauchy序列.
+
+（$\Leftarrow$）用反证法，假设$T$无界，则存在有界序列$\{x_n\}$，不妨设$\norm{x_n} \leqslant M, n \geqslant 1, \st \norm{Tx_n} > n.$令$z_n = \frac{x_n}{\sqrt{n}}$.则$\norm{z_n} = \frac{1}{\sqrt{n}}\norm{x_n} \to 0$.令$A = \{z_1, z_2, \cdots\}$则$A$为完全有界集.而$\norm{Tz_n} = \norm{T(\frac{x_n}{\sqrt{n}})} = \frac{1}{\sqrt{n}} \norm{Tx_n} > \sqrt{n} \to \infty$.则$\{Tz_n\}$不有界，则也不完全有界，矛盾.则$T$有界.
+
+4.$\forall x = (x_i) \in l^p, \nnorm{Tx}{p} = (\sum_{i = 1}^{\infty}{|a_i x_i|^p})^{\frac{1}{p}} \leqslant (\sum_{i = 1}^{\infty}{\sup_{i \geqslant 1}{|a_i|} |x_i|^p})^{\frac{1}{p}} = \nnorm{a}{\infty} \nnorm{x}{p}.$，反向不等式，由$\forall \varepsilon > 0, \exists n_0, \st |a_{n_0}| > \nnorm{a}{\infty} - \varepsilon.$可设$x^{(0)} = (0, 0, \cdots, 0, \sgn{a_{n_0}}) \in l^p$.证明$\nnorm{Tx^{(0)}}{p} = |a_{n_0}| > \nnorm{a}{\infty} - \varepsilon$即可.
+
+5.$|f(x)| = |\int_{0}^{\frac{1}{2}} x(t) \dif t - \int_\frac{1}{2}^{1} x(t) \dif t| \leqslant \int_{0}^{\frac{1}{2}} x(t) \dif t + \int_\frac{1}{2}^{1} x(t) \dif t \leqslant \norm{x}$.反向不等式可设：
+\begin{equation*}
+	x_n(t) = 
+	\begin{cases}
+		1, \quad x \in [0, \frac{1}{2} - \frac{1}{n}] \\
+		\frac{1}{n} (\frac{1}{2} - x), \quad x \in (\frac{1}{2} - \frac{1}{n}, \frac{1}{2} + \frac{1}{n}] \\
+		-1, \quad x \in (\frac{1}{2} + \frac{1}{n}, 1].
+	\end{cases}
+\end{equation*}
+
+可得$|f(x_\varepsilon)| = 1 - 2 \varepsilon, \varepsilon \to 0$即可.
+
+6.（1）正向不等式用Holder放缩，反向不等式构造：$x_0(t) = \sqrt{3} (t)$.（2）正向不等式由$t \leqslant 1$直接放缩，反向不等式构造：$x_\varepsilon(t) = \frac{1}{\sqrt{\varepsilon}} \chi_{[1 - \varepsilon, 1](t)}$，有$\nnorm{Tx_\varepsilon}{2} = (\frac{1}{\varepsilon}\int_{1 - \varepsilon}^{1}{t^2} \dif t)^\frac{1}{2} \geqslant (\frac{1}{\varepsilon} \int_{1 - \varepsilon}^{1}{1 - \varepsilon}^2 \dif t)^{\frac{1}{2}} = 1 - \varepsilon$.
+
 \end{document}
